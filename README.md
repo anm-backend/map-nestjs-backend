@@ -58,6 +58,20 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Database
+yarn add mongoose @nestjs/mongoose
+
+## Validate
+yarn add class-validator class-transformer
+
+yarn add @nestjs/apollo @nestjs/graphql @nestjs/jwt @nestjs/mapped-types @nestjs/passport apollo-server-express bcryptjs buffer-to-stream cloudinary cookie-parser crypto express graphql jsonwebtoken passport passport-jwt passport-local swagger-ui-express webpack
+
+yarn add -D @types/cookie-parser @types/multer @types/passport-jwt 
+
+yarn add -D @types/socket.io
+
+yarn add @nestjs/websockets @nestjs/platform-socket.io  
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
