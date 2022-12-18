@@ -1,0 +1,1 @@
+heroku config:set -a viu-alumni-it-server ACCESS_TOKEN_SECRET=""

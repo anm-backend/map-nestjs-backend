@@ -1,0 +1,1 @@
+gut branch --set-upstream-to=dev/master ci-cd
