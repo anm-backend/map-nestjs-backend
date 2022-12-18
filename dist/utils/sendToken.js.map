@@ -1,0 +1,1 @@
+{"version":3,"file":"sendToken.js","sourceRoot":"","sources":["../../src/utils/sendToken.ts"],"names":[],"mappings":";;;AASO,MAAM,SAAS,GAAG,CAAC,IAAa,EAAa,EAAE;IACpD,MAAM,KAAK,GAAG,IAAI,CAAC,WAAW,EAAE,CAAC;IAEjC,OAAO;QACL,OAAO,EAAE,IAAI;QACb,IAAI;QACJ,KAAK;KACN,CAAC;AACJ,CAAC,CAAC;AARW,QAAA,SAAS,aAQpB"}
