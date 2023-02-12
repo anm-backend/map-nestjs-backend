@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SchoolService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("mongoose");
-const cloudinary_service_1 = require("../../cloudinary/cloudinary.service");
+const cloudinary_service_1 = require("../../uploads/cloudinary/cloudinary.service");
 const configuration_1 = require("../../config/configuration");
 const errorHandler_1 = require("../../utils/errorHandler");
 const base_service_1 = require("../base/base.service");

@@ -14,14 +14,14 @@ import { Logger } from '@nestjs/common';
 import { Socket, Server } from 'socket.io';
 import { OnGatewayDisconnect } from '@nestjs/websockets/interfaces/hooks';
 
-@WebSocketGateway()
+// @WebSocketGateway()
 // Change Socket Gateway
-// @WebSocketGateway(4001, {
-//   path: '/websocket',
-//   cors: true,
-//   serveClient: true,
-//   namespace: '/',
-// })
+@WebSocketGateway(4001, {
+  //   path: '/websocket',
+  cors: true,
+  //   serveClient: true,
+  //   namespace: '/',
+})
 export class RealtimeGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -68,12 +68,12 @@ export class RealtimeGateway
 
   @SubscribeMessage('msgToServer')
   // Single Receive Client
-  // handleMessage(client: Socket, text: string): WsResponse<string> {
-  //   return { event: 'msgToClient', data: text };
-  // }
-  // Multiple Receive Client
-  handleMessageVoid(client: Socket, text: string): void {
-    this.wss.emit('msgToClient', text);
-    // client.emit('msgToClient', text);
+  handleMessage(client: Socket, text: string): WsResponse<string> {
+    return { event: 'msgToClient', data: text };
   }
+  // Multiple Receive Client
+  // handleMessageVoid(client: Socket, text: string): void {
+  //   this.wss.emit('msgToClient', text);
+  //   // client.emit('msgToClient', text);
+  // }
 }

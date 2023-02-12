@@ -19,6 +19,8 @@ const create_student_dto_1 = require("./dto/create-student.dto");
 const update_student_dto_1 = require("./dto/update-student.dto");
 const swagger_1 = require("@nestjs/swagger");
 const base_routes_1 = require("../base/base.routes");
+const http_exception_filter_1 = require("../../utils/http-exception.filter");
+const own_error_filter_1 = require("../../utils/own-error.filter");
 let StudentController = class StudentController {
     constructor(studentService) {
         this.studentService = studentService;
@@ -40,6 +42,7 @@ let StudentController = class StudentController {
     }
 };
 __decorate([
+    (0, swagger_1.ApiCreatedResponse)({}),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -47,12 +50,18 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "create", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        type: (Array),
+        isArray: true,
+        description: 'Get list user',
+    }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "findAll", null);
 __decorate([
+    (0, swagger_1.ApiNotFoundResponse)(),
     (0, common_1.Get)(':_id'),
     __param(0, (0, common_1.Param)('_id')),
     __metadata("design:type", Function),
@@ -77,6 +86,7 @@ __decorate([
 StudentController = __decorate([
     (0, swagger_1.ApiTags)('Student'),
     (0, base_routes_1.PrefixController)('student'),
+    (0, common_1.UseFilters)(new http_exception_filter_1.HttpExceptionFilter(), new own_error_filter_1.OwnErrorFilter()),
     __metadata("design:paramtypes", [student_service_1.StudentService])
 ], StudentController);
 exports.StudentController = StudentController;

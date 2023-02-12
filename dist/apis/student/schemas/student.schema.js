@@ -11,26 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentSchema = exports.Student = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
-const class_validator_1 = require("class-validator");
-const swagger_1 = require("@nestjs/swagger");
-let Student = class Student extends mongoose_2.Document {
+let Student = class Student {
 };
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Please Enter Your Identity Code' }),
     (0, mongoose_1.Prop)({ required: true, trim: true, unique: true }),
     __metadata("design:type", String)
 ], Student.prototype, "identityCode", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Please Enter Your Name' }),
     (0, mongoose_1.Prop)({ required: true, trim: true }),
     __metadata("design:type", String)
 ], Student.prototype, "name", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Please Enter Your Class Study' }),
     (0, mongoose_1.Prop)({ required: true, trim: true }),
     __metadata("design:type", String)
 ], Student.prototype, "classStudy", void 0);

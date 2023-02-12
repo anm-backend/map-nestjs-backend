@@ -23,39 +23,79 @@ let StudentService = class StudentService extends base_service_1.BaseService {
         this.studentModel = studentModel;
     }
     async create(createStudentDto) {
-        const data = await this.model.create(createStudentDto);
-        return {
-            success: true,
-            data,
-        };
+        try {
+            const data = await this.model.create(createStudentDto);
+            return {
+                success: true,
+                data,
+            };
+        }
+        catch (error) {
+            throw new common_1.BadRequestException(error);
+        }
     }
     async findAll() {
-        const data = await this.model.find();
-        return {
-            success: true,
-            data,
-        };
+        const page = 1;
+        const limit = 10;
+        try {
+            const data = await this.model
+                .find()
+                .limit(limit)
+                .skip((page - 1) * limit);
+            return {
+                success: true,
+                count: data.length,
+                data,
+            };
+        }
+        catch (error) {
+            return {
+                success: false,
+                error,
+            };
+        }
     }
     async findOne(id) {
-        const data = await this.model.findById(id);
-        return {
-            success: true,
-            data,
-        };
+        try {
+            const data = await this.model.findById(id);
+            return {
+                success: true,
+                data,
+            };
+        }
+        catch (error) {
+            throw new common_1.NotFoundException(error);
+        }
     }
     async update(id, updateStudentDto) {
-        const data = await this.model.findByIdAndUpdate(id, updateStudentDto);
-        return {
-            success: true,
-            data,
-        };
+        try {
+            const data = await this.model.findByIdAndUpdate(id, updateStudentDto);
+            return {
+                success: true,
+                data,
+            };
+        }
+        catch (error) {
+            return {
+                success: false,
+                error,
+            };
+        }
     }
     async remove(id) {
-        const data = await this.model.findByIdAndDelete(id);
-        return {
-            success: true,
-            data,
-        };
+        try {
+            const data = await this.model.findByIdAndDelete(id);
+            return {
+                success: true,
+                data,
+            };
+        }
+        catch (error) {
+            return {
+                success: false,
+                error,
+            };
+        }
     }
 };
 StudentService = __decorate([

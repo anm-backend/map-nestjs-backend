@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "sourceMap": true,
+    // "outDir": "../map-nestjs-backend-dist/dist",
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,

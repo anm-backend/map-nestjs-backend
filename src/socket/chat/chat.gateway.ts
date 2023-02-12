@@ -8,7 +8,7 @@ import {
   OnGatewayDisconnect,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
+import { Namespace, Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   namespace: '/chat',
@@ -16,24 +16,51 @@ import { Server, Socket } from 'socket.io';
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
-  @WebSocketServer() wss: Server;
-  private logger: Logger = new Logger('RealtimeGateway');
+  private readonly logger: Logger = new Logger(ChatGateway.name);
 
-  afterInit(server: Server) {
+  @WebSocketServer() wss: Server;
+  @WebSocketServer() io: Namespace;
+
+  afterInit(server: Server): void {
     this.logger.log('Initialized ChatGateway!');
   }
-  handleConnection(client: Socket, ...args: any[]) {
+  handleConnection(client: Socket, ...args: any[]): void {
+    const sockets = this.io.sockets;
+
     this.logger.log(`Client connected: ${client.id} ChatGateway`);
+    this.logger.debug(
+      `Number of connected sockets: ${sockets.size} ChatGateway`,
+    );
+    this.io.emit(`hello`, `from ${client.id}`)
   }
-  handleDisconnect(client: Socket) {
+  handleDisconnect(client: Socket): void {
+    const sockets = this.io.sockets;
+
     this.logger.log(`Client disconnecting: ${client.id} ChatGateway`);
+    this.logger.debug(
+      `Number of connected sockets: ${sockets.size} ChatGateway`,
+    );
   }
 
   @SubscribeMessage('msgToServer')
   handleMessageVoid(
     client: Socket,
-    message: { sender: string; message: string },
+    // message: { sender: string, message: string },
+    message: { sender: string; room: string; message: string },
   ): void {
-    this.wss.emit('msgToClient', message);
+    // this.wss.emit('msgToClient', message);
+    this.wss.to(message.room).emit('msgToClient', message);
+  }
+
+  @SubscribeMessage('joinRoom')
+  handleJoinRoom(client: Socket, room: string): void {
+    client.join(room);
+    client.emit('joinerRoom', room);
+  }
+
+  @SubscribeMessage('leaveRoom')
+  handleLeaveRoom(client: Socket, room: string): void {
+    client.leave(room);
+    client.emit('leaveRoom', room);
   }
 }

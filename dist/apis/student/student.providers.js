@@ -7,7 +7,8 @@ exports.studentProviders = [
     {
         provide: configuration_1.schemaConfigs.STUDENT_MODEL.toString(),
         useFactory(connection) {
-            return connection.model('Student', student_schema_1.StudentSchema);
+            const m = connection.model('Student', student_schema_1.StudentSchema);
+            return m;
         },
         inject: [configuration_1.dbConfigs],
     },

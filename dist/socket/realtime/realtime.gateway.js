@@ -48,8 +48,8 @@ let RealtimeGateway = class RealtimeGateway {
     remove(id) {
         return this.realtimeService.remove(id);
     }
-    handleMessageVoid(client, text) {
-        this.wss.emit('msgToClient', text);
+    handleMessage(client, text) {
+        return { event: 'msgToClient', data: text };
     }
 };
 __decorate([
@@ -94,10 +94,12 @@ __decorate([
     (0, websockets_1.SubscribeMessage)('msgToServer'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [socket_io_1.Socket, String]),
-    __metadata("design:returntype", void 0)
-], RealtimeGateway.prototype, "handleMessageVoid", null);
+    __metadata("design:returntype", Object)
+], RealtimeGateway.prototype, "handleMessage", null);
 RealtimeGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)(),
+    (0, websockets_1.WebSocketGateway)(4001, {
+        cors: true,
+    }),
     __metadata("design:paramtypes", [realtime_service_1.RealtimeService])
 ], RealtimeGateway);
 exports.RealtimeGateway = RealtimeGateway;

@@ -10,13 +10,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateTeacherDto = void 0;
+const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
 const teacher_schema_1 = require("../schemas/teacher.schema");
-class CreateTeacherDto extends teacher_schema_1.Teacher {
+const create_base_dto_1 = require("../../base/dto/create-base.dto");
+class CreateTeacherDto {
 }
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, create_base_dto_1.IsNotEmptyF)('Họ'),
+    __metadata("design:type", String)
+], CreateTeacherDto.prototype, "firstName", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, create_base_dto_1.IsNotEmptyF)('Tên'),
+    __metadata("design:type", String)
+], CreateTeacherDto.prototype, "lastName", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsEmail)(),
+    __metadata("design:type", String)
+], CreateTeacherDto.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], CreateTeacherDto.prototype, "phone", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, create_base_dto_1.IsNotEmptyF)('Giới tính'),
+    __metadata("design:type", String)
+], CreateTeacherDto.prototype, "gender", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, create_base_dto_1.IsNotEmptyF)('Mã giáo viên'),
+    __metadata("design:type", String)
+], CreateTeacherDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, create_base_dto_1.IsNotEmptyF)('Mật khẩu'),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", teacher_schema_1.Avatar)
+], CreateTeacherDto.prototype, "avatar", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], CreateTeacherDto.prototype, "role", void 0);
 exports.CreateTeacherDto = CreateTeacherDto;
 //# sourceMappingURL=create-teacher.dto.js.map

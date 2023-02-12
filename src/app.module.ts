@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import configuration from './config/configuration';
+import { MulterModule } from '@nestjs/platform-express';
 import { ApisModule } from './apis/apis.module';
-import { GraphqlsModule } from './graphqls/graphqls.module';
-import { DatabaseModule } from './database/database.module';
-import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { AuthModule } from './auth/auth.module';
+import configuration from './config/configuration';
+import { DatabaseModule } from './database/database.module';
+import { GraphqlsModule } from './graphqls/graphqls.module';
 import { SocketModule } from './socket/socket.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -14,12 +15,14 @@ import { SocketModule } from './socket/socket.module';
       isGlobal: true,
       load: [configuration],
     }),
+    MulterModule.register({ dest: './uploads' }),
     GraphqlsModule,
     ApisModule,
+
     DatabaseModule,
-    CloudinaryModule,
-    AuthModule,
+    // AuthModule,
     SocketModule,
+    UploadsModule,
   ],
   providers: [],
 })

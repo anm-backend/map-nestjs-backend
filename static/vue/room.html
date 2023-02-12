@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Chatting</title>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/vue-simple-notify@1.0.5/dist/vue-simple-notify.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="https://unpkg.com/vue-simple-notify@1.0.5/dist/vue-simple-notify.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/vue/vue.js"></script>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+</head>
+
+<body>
+  <div id="v-app">
+    <bootstrap-component></bootstrap-component>
+    <header-component></header-component>
+
+    <section class="alerts">
+      <alerts-component :items="alerts">{{ alerts }}</alerts-component>
+    </section>
+
+    <section class="chat">
+      <h1>Room</h1>
+      <form>
+        <input v-model="text" name="" id="">
+        <button type="submit" @click.prevent="sendMsg()">Send</button>
+      </form>
+
+      <div class="tab-row">
+        <button class="tab-btn" :class="{ active: activeRoom == 'general' }"
+          @click="activeRoom = 'general'">General</button>
+        <button class="tab-btn" :class="{ active: activeRoom == 'typescript' }"
+          @click="activeRoom = 'typescript'">TypeScript</button>
+        <button class="tab-btn" :class="{ active: activeRoom == 'nestjs' }"
+          @click="activeRoom = 'nestjs'">NestJs</button>
+      </div>
+      <div class="tab-row">
+        Status: {{ isMemberOfActiveRoom ? 'Joined' : 'NOT Joined' }} <button @click="toggleRoomMembership()">{{
+          isMemberOfActiveRoom ? 'Leave' : 'Join' }}</button>
+      </div>
+
+      <p>
+      <ul>
+        <li v-for="msg of messages[activeRoom]">
+          <strong>{{ msg.sender }}: </strong>{{ msg.message }}
+        </li>
+      </ul>
+      </p>
+    </section>
+  </div>
+
+  <script>
+    Vue.component("alerts-component", VueSimpleNotify.VueSimpleNotify)
+    const app = new Vue({
+      el: '#v-app',
+      data: {
+        username: '',
+        text: '',
+        messages: {
+          general: [],
+          typescript: [],
+          nestjs: [],
+        },
+        rooms: {
+          general: true,
+          typescript: true,
+          nestjs: true,
+        },
+        alerts: [],
+        activeRoom: 'general',
+        socket: { chat: null, alerts: null, },
+      },
+      methods: {
+        sendMsg() {
+          if (this.isMemberOfActiveRoom) {
+            this.socket.chat.emit('msgToServer', { sender: this.username, rooms: this.activeRoom, message: this.text });
+            this.text = "";
+          }
+          else {
+            alert('You must be a mmember of the active roomto send messages!');
+          }
+
+        },
+        receiveMessage(msg) {
+          this.messages[msg.room].push(msg);
+        },
+        receiveAlert(msg) {
+          this.alerts.push(msg);
+        },
+        toggleRoomMembership() {
+          if (this.isMemberOfActiveRoom) {
+            this.socket.chat.emit('leaveRoom', this.activeRoom);
+          } else {
+            this.socket.chat.emit('joinRoom', this.activeRoom);
+          }
+        },
+      },
+      computed: {
+        isMemberOfActiveRoom() {
+          return this.rooms[this.activeRoom];
+        },
+      },
+      created() {
+        // this.username = prompt("enter your username")
+        this.username = 'prompt("enter your username")'
+
+        this.socket.chat = io('/chat');
+        this.socket.chat.on('msgToClient', (msg) => {
+          this.receiveMessage(msg);
+        });
+
+        this.socket.chat.on('connect', () => {
+          this.toggleRoomMembership();
+        });
+
+        this.socket.chat.on('joinerRoom', (room) => {
+          this.rooms[room] = true;
+        });
+        this.socket.chat.on('leaveRoom', (room) => {
+          this.rooms[room] = false;
+        });
+
+        this.socket.alerts = io('/alert');
+        this.socket.alerts.on('alertToClient', (alert) => {
+          this.receiveAlert(alert);
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

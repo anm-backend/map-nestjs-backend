@@ -3,7 +3,7 @@ import { TeacherService } from './teacher.service';
 import { TeacherController } from './teacher.controller';
 import { teacherProviders } from './teacher.providers';
 import { DatabaseModule } from 'src/database/database.module';
-import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
+import { CloudinaryModule } from 'src/uploads/cloudinary/cloudinary.module';
 
 @Module({
   imports: [DatabaseModule, CloudinaryModule],

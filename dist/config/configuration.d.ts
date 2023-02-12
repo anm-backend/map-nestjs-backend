@@ -1,5 +1,6 @@
 export default function (): {
     port: number;
+    nodeEnv: string;
     socketPort: number;
     database: {
         host: string;

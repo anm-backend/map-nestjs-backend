@@ -2,7 +2,7 @@ import * as Method from '@nestjs/common';
 import { TeacherService } from './teacher.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiBearerAuth, ApiProperty, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { PrefixController } from '../base/base.routes';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadedFile, UseGuards } from '@nestjs/common';
@@ -10,9 +10,14 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/entities/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { SendToken } from 'src/utils/sendToken';
+import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 
 @ApiTags('Teacher')
-@PrefixController()
+@PrefixController('teacher')
+@ApiSecurity('basic')
+@ApiBasicAuth()
+@ApiBearerAuth()
 export class TeacherController {
   constructor(private readonly userService: TeacherService) {}
 
@@ -20,13 +25,14 @@ export class TeacherController {
   @Method.UseInterceptors(FileInterceptor('image'))
   registerTeacher(
     @UploadedFile() image: Express.Multer.File,
+    // @Method.Body(SETTINGS.VALIDATION_PIPE) createTeacherDto: CreateTeacherDto,
     @Method.Body() createTeacherDto: CreateTeacherDto,
-  ) {
+  ): Promise<SendToken> {
     return this.userService.registerTeacher(image, createTeacherDto);
   }
   @Method.Post('/login')
-  loginTeacher(@Method.Body() loginTeacher: { email: string; password: string }) {
-    return this.userService.loginTeacher(loginTeacher.email, loginTeacher.password);
+  login(@Method.Body() loginTeacher: RequestLoginTeacherDto) {
+    return this.userService.loginTeacher(loginTeacher);
   }
 
   @Method.Get('/logout')
@@ -74,9 +80,9 @@ export class TeacherController {
     // return this.userService.update(+id, updateTeacherDto);
   }
 
-  @Method.Get('/admin/users')
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.ADMIN)
+  @Method.Get('/list')
+  // @UseGuards(JwtAuthGuard)
+  // @Roles(Role.ADMIN)
   getAllTeachers() {
     return this.userService.getAllTeachers();
   }

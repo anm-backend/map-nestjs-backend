@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { CloudinaryService } from 'src/uploads/cloudinary/cloudinary.service';
 import { schemaConfigs } from 'src/config/configuration';
 import { ErrorHandler } from 'src/utils/errorHandler';
 import { QueryParam } from 'src/utils/searchFeatures';

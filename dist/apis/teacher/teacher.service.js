@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TeacherService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("mongoose");
-const cloudinary_service_1 = require("../../cloudinary/cloudinary.service");
+const cloudinary_service_1 = require("../../uploads/cloudinary/cloudinary.service");
 const configuration_1 = require("../../config/configuration");
 const sendToken_1 = require("../../utils/sendToken");
 const base_service_1 = require("../base/base.service");
@@ -26,26 +26,32 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
         this.cloudinaryService = cloudinaryService;
     }
     async registerTeacher(image, createTeacherDto) {
-        const myCloud = await this.cloudinaryService.uploadImage(image, {
-            folder: 'avatars',
-            width: 150,
-            crop: 'scale',
-        });
-        const { name, email, gender, password } = createTeacherDto;
-        const user = await this.model.create({
-            name,
-            email,
-            gender,
-            password,
-        });
-        return (0, sendToken_1.sendToken)(user);
+        try {
+            const { firstName, lastName, email, userId, gender, password } = createTeacherDto;
+            const user = await this.model.create({
+                firstName,
+                lastName,
+                email,
+                gender,
+                password,
+                userId,
+            });
+            delete user.password;
+            return (0, sendToken_1.sendToken)(user);
+        }
+        catch (error) {
+            throw new common_1.UnauthorizedException([error]);
+        }
     }
-    async loginTeacher(email, password) {
-        if (!email || !password)
+    async loginTeacher(loginTeacher) {
+        const { userId, password } = loginTeacher;
+        if (!userId || !password)
             throw new common_1.HttpException('Please Enter Email And Password', common_1.HttpStatus.BAD_REQUEST);
-        const user = await this.model.findOne({ email }).select('+password');
+        const user = await this.model
+            .findOne({ userId })
+            .select(['+password', '-role', '-createdAt', '-updatedAt']);
         if (!user)
-            throw new common_1.UnauthorizedException('Invalid Email or Password');
+            throw new common_1.UnauthorizedException(['Invalid Email']);
         const isPasswordMatched = await user.comparePassword(password);
         if (!isPasswordMatched)
             throw new common_1.UnauthorizedException('Invalid Email or Password');
@@ -64,7 +70,7 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
         };
     }
     async getAllTeachers() {
-        const users = await this.model.find();
+        const users = await this.model.find().select(['-password']);
         return {
             success: true,
             users,

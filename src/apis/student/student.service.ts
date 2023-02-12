@@ -1,4 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { Student } from './schemas/student.schema';
@@ -19,47 +24,95 @@ export class StudentService extends BaseService<
   }
 
   async create(createStudentDto: CreateStudentDto) {
-    const data = await this.model.create(createStudentDto);
+    try {
+      const data = await this.model.create(createStudentDto);
 
-    return {
-      success: true,
-      data,
-    };
+      return {
+        success: true,
+        data,
+      };
+    } catch (error) {
+      // throw new HttpException('Create error', HttpStatus.BAD_REQUEST);
+      // throw new HttpException(
+      //   { status: HttpStatus.BAD_REQUEST, error },
+      //   HttpStatus.BAD_REQUEST,
+      // );
+      throw new BadRequestException(error);
+      // return {
+      //   success: false,
+      //   error,
+      // };
+    }
   }
 
   async findAll() {
-    const data = await this.model.find();
+    const page: number = 1;
+    const limit: number = 10;
+    try {
+      const data: Student[] = await this.model
+        .find()
+        .limit(limit)
+        .skip((page - 1) * limit);
 
-    return {
-      success: true,
-      data,
-    };
+      return {
+        success: true,
+        count: data.length,
+        data,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error,
+      };
+    }
   }
 
   async findOne(id: string) {
-    const data = await this.model.findById(id);
+    try {
+      const data = await this.model.findById(id);
 
-    return {
-      success: true,
-      data,
-    };
+      return {
+        success: true,
+        data,
+      };
+    } catch (error) {
+      throw new NotFoundException(error);
+      // return {
+      //   success: false,
+      //   error,
+      // };
+    }
   }
 
   async update(id: string, updateStudentDto: UpdateStudentDto) {
-    const data = await this.model.findByIdAndUpdate(id, updateStudentDto);
+    try {
+      const data = await this.model.findByIdAndUpdate(id, updateStudentDto);
 
-    return {
-      success: true,
-      data,
-    };
+      return {
+        success: true,
+        data,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error,
+      };
+    }
   }
 
   async remove(id: string) {
-    const data = await this.model.findByIdAndDelete(id);
+    try {
+      const data = await this.model.findByIdAndDelete(id);
 
-    return {
-      success: true,
-      data,
-    };
+      return {
+        success: true,
+        data,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error,
+      };
+    }
   }
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- <script src="http://localhost:4001/socket.io/socket.io.js"></script> -->
+  <!-- <script src="http://localhost:4001/websocket/socket.io/socket.io.js"></script> -->
+  <!-- <script src="/js/socket.io/socket.io.js"></script> -->
+  <title>Document</title>
+
+  <script src="/js/vue/vue.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/bootstrap.js"></script>
+</head>
+
+<body>
+  <div id="components-demo">
+    <bootstrap-component></bootstrap-component>
+    <header-component></header-component>
+
+    <button-counter></button-counter>
+    <blog-post title="Giới thiệu về Vue"></blog-post>
+    <blog-post title="Các khái niệm trong Vue"></blog-post>
+    <blog-post title="Vue căn bản và vô cùng nâng cao"></blog-post>
+
+    <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:title="post.title"></blog-post>
+
+    <!-- <h3>{{ post.title }}</h3>
+    <div v-html="post.content"></div> -->
+  </div>
+
+  <script>
+    // https://vi.vuejs.org/v2/guide/components.html
+    new Vue({
+      el: '#components-demo',
+      data: {
+        posts: [
+          { id: 1, title: 'Giới thiệu về Vue' },
+          { id: 2, title: 'Các khái niệm trong Vue' },
+          { id: 3, title: 'Vue căn bản và vô cùng nâng cao' }
+        ],
+        post: { title: "" }
+      }
+    })
+    // new Vue({
+    //   el: '#blog-post-demo',
+    //   data: {
+    //     posts: [
+    //       { id: 1, title: 'Giới thiệu về Vue' },
+    //       { id: 2, title: 'Các khái niệm trong Vue' },
+    //       { id: 3, title: 'Vue căn bản và vô cùng nâng cao' }
+    //     ]
+    //   }
+    // })
+  </script>
+
+  <template>
+    <h1>Here is a child component!</h1>
+    <ButtonCounter />
+  </template>
+</body>
+
+</html>

@@ -21,9 +21,9 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
+/// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Document } from 'mongoose';
-export declare class Student extends Document {
+export declare class Student {
     identityCode: string;
     name: string;
     classStudy: string;

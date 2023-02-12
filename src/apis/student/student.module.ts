@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { StudentController } from './student.controller';
-import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
+import { CloudinaryModule } from 'src/uploads/cloudinary/cloudinary.module';
 import { DatabaseModule } from 'src/database/database.module';
 import { studentProviders } from './student.providers';
 

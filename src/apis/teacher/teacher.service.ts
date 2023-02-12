@@ -7,13 +7,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { CloudinaryService } from 'src/uploads/cloudinary/cloudinary.service';
 import { schemaConfigs } from 'src/config/configuration';
 import { sendToken, SendToken } from 'src/utils/sendToken';
 import { BaseService } from '../base/base.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { Teacher } from './schemas/teacher.schema';
+import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 
 @Injectable()
 export class TeacherService extends BaseService<
@@ -33,34 +34,46 @@ export class TeacherService extends BaseService<
     image: Express.Multer.File,
     createTeacherDto: CreateTeacherDto,
   ): Promise<SendToken> {
-    const myCloud = await this.cloudinaryService.uploadImage(image, {
-      folder: 'avatars',
-      width: 150,
-      crop: 'scale',
-    });
-    const { name, email, gender, password } = createTeacherDto;
-    const user = await this.model.create({
-      name,
-      email,
-      gender,
-      password,
-      // avatar: {
-      //   public_id: myCloud.public_id,
-      //   url: myCloud.secure_url,
-      // },
-    });
-    return sendToken(user);
+    try {
+      // const myCloud = await this.cloudinaryService.uploadImage(image, {
+      //   folder: 'avatars',
+      //   width: 150,
+      //   crop: 'scale',
+      // });
+      const { firstName, lastName, email, userId, gender, password } =
+        createTeacherDto;
+      const user = await this.model.create({
+        firstName,
+        lastName,
+        email,
+        gender,
+        password,
+        userId,
+        // avatar: {
+        //   public_id: myCloud.public_id,
+        //   url: myCloud.secure_url,
+        // },
+      });
+      delete user.password;
+      return sendToken(user);
+    } catch (error) {
+      throw new UnauthorizedException([error]);
+    }
   }
+
   // Login Teacher
-  async loginTeacher(email: string, password: string): Promise<SendToken> {
-    if (!email || !password)
+  async loginTeacher(loginTeacher: RequestLoginTeacherDto): Promise<SendToken> {
+    const { userId, password } = loginTeacher;
+    if (!userId || !password)
       throw new HttpException(
         'Please Enter Email And Password',
         HttpStatus.BAD_REQUEST,
       );
 
-    const user = await this.model.findOne({ email }).select('+password');
-    if (!user) throw new UnauthorizedException('Invalid Email or Password');
+    const user = await this.model
+      .findOne({ userId })
+      .select(['+password', '-role', '-createdAt', '-updatedAt']);
+    if (!user) throw new UnauthorizedException(['Invalid Email']);
 
     const isPasswordMatched = await user.comparePassword(password);
     if (!isPasswordMatched)
@@ -183,7 +196,7 @@ export class TeacherService extends BaseService<
   // ADMIN DASHBOARD
   // Get All Teachers --ADMIN
   async getAllTeachers() {
-    const users = await this.model.find();
+    const users = await this.model.find().select(['-password']);
 
     return {
       success: true,

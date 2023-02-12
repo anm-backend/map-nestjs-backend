@@ -21,10 +21,10 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
             secretOrKey: 'WFFWf15115U842UGUBWF81EE858UYBY51BGBJ5E51Q',
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromExtractors([
                 (request) => {
-                    const { token } = request === null || request === void 0 ? void 0 : request.cookies;
-                    if (!token)
-                        throw new common_1.UnauthorizedException("You are not login");
-                    return token;
+                    const cookies = request === null || request === void 0 ? void 0 : request.cookies;
+                    if (!cookies || !cookies.token)
+                        throw new common_1.UnauthorizedException('Bạn chưa đăng nhập');
+                    return cookies.token;
                 },
             ]),
         });

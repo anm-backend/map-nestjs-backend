@@ -9,13 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
-const configuration_1 = require("./config/configuration");
+const platform_express_1 = require("@nestjs/platform-express");
 const apis_module_1 = require("./apis/apis.module");
-const graphqls_module_1 = require("./graphqls/graphqls.module");
+const configuration_1 = require("./config/configuration");
 const database_module_1 = require("./database/database.module");
-const cloudinary_module_1 = require("./cloudinary/cloudinary.module");
-const auth_module_1 = require("./auth/auth.module");
+const graphqls_module_1 = require("./graphqls/graphqls.module");
 const socket_module_1 = require("./socket/socket.module");
+const uploads_module_1 = require("./uploads/uploads.module");
 let AppModule = class AppModule {
     onModuleInit() {
     }
@@ -27,12 +27,12 @@ AppModule = __decorate([
                 isGlobal: true,
                 load: [configuration_1.default],
             }),
+            platform_express_1.MulterModule.register({ dest: './uploads' }),
             graphqls_module_1.GraphqlsModule,
             apis_module_1.ApisModule,
             database_module_1.DatabaseModule,
-            cloudinary_module_1.CloudinaryModule,
-            auth_module_1.AuthModule,
             socket_module_1.SocketModule,
+            uploads_module_1.UploadsModule,
         ],
         providers: [],
     })

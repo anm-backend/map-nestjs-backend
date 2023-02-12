@@ -1,4 +1,4 @@
-import { OnGatewayInit, OnGatewayConnection } from '@nestjs/websockets';
+import { OnGatewayInit, WsResponse, OnGatewayConnection } from '@nestjs/websockets';
 import { RealtimeService } from './realtime.service';
 import { CreateRealtimeDto } from './dto/create-realtime.dto';
 import { UpdateRealtimeDto } from './dto/update-realtime.dto';
@@ -17,5 +17,5 @@ export declare class RealtimeGateway implements OnGatewayInit, OnGatewayConnecti
     findOne(id: number): string;
     update(updateRealtimeDto: UpdateRealtimeDto): string;
     remove(id: number): string;
-    handleMessageVoid(client: Socket, text: string): void;
+    handleMessage(client: Socket, text: string): WsResponse<string>;
 }

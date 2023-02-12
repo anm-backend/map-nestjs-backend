@@ -23,21 +23,21 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Document } from 'mongoose';
-declare class Avatar {
+export declare class Avatar {
     public_id: string;
     url: string;
 }
 export declare class Teacher extends Document {
-    name: string;
-    email: string;
+    firstName: string;
+    lastName: string;
+    email?: string;
+    phone?: string;
     gender: string;
+    userId: string;
     password: string;
-    avatar: Avatar;
+    avatar?: Avatar;
     role: string;
-    resetPasswordToken: string;
-    resetPasswordExpire: Date;
     comparePassword: Function;
     getJWTToken: Function;
 }
 export declare const TeacherSchema: import("mongoose").Schema<Teacher, import("mongoose").Model<Teacher, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Teacher>;
-export {};

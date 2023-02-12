@@ -4,6 +4,7 @@ exports.dbConfigs = exports.schemaConfigs = void 0;
 function default_1() {
     return {
         port: parseInt(process.env.PORT, 10) || 3000,
+        nodeEnv: process.env.NODE_ENV || 'DEVELOPEMENT' || 'PRODUCTION',
         socketPort: parseInt(process.env.SOCKET_PORT, 10) ||
             parseInt(process.env.PORT, 10) ||
             3000,

@@ -1,3 +1,23 @@
+https://socket.io/docs/v4/middlewares/
+https://github.com/nestjs/nest/issues/882
+https://github.com/JacobSNGoodwin/ranker-course
+ctrl + k
+https://www.google.com/search?q=nestjs+swagger+addBearerAuth&newwindow=1&sxsrf=ALiCzsYnT7mTXUcGt1_ec4lUjSMjB6k9YA:1671613596083&source=lnms&tbm=vid&sa=X&ved=2ahUKEwjGhOL0rYr8AhVJHnAKHbUUCXsQ_AUoAnoECAEQBA&biw=1366&bih=667&dpr=1
+https://docs.nestjs.com/openapi/security
+https://www.google.com/search?q=swagger+nestjs+login&oq=swagger+nestjs+login+&aqs=chrome..69i57.13744j0j7&sourceid=chrome&ie=UTF-8
+https://www.youtube.com/watch?v=lZmsY0e2ojQ
+https://www.youtube.com/watch?v=xzu3QXwo1BU&list=PL_cUvD4qzbkw-phjGK2qq0nQiG6gw1cKK
+https://www.youtube.com/watch?v=x1W3FJ1RJlM
+https://www.youtube.com/watch?v=A1RbTJn0mYE
+https://www.youtube.com/watch?v=mldXZb7RVHk
+https://www.youtube.com/watch?v=ia2tzInRFl4&list=PLnrGn4P6C4P5J2rSSyiAyxZegws4SS8ey
+https://www.youtube.com/watch?v=f-URVd2OKYc
+https://www.youtube.com/watch?v=3SCdzzD0PdQ
+https://www.youtube.com/watch?v=tUNaSRa5CFA
+
+https://www.google.com/search?q=typescript+do%27s+and+don%27ts&oq=typescript+do%27s+and+don%27ts&aqs=chrome..69i57.20057j0j7&sourceid=chrome&ie=UTF-8
+https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -71,6 +91,8 @@ yarn add -D @types/cookie-parser @types/multer @types/passport-jwt
 yarn add -D @types/socket.io
 
 yarn add @nestjs/websockets @nestjs/platform-socket.io  
+
+yarn add -D multer
 
 ## Support
 

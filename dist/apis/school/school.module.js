@@ -12,7 +12,7 @@ const school_service_1 = require("./school.service");
 const school_controller_1 = require("./school.controller");
 const database_module_1 = require("../../database/database.module");
 const school_providers_1 = require("./school.providers");
-const cloudinary_module_1 = require("../../cloudinary/cloudinary.module");
+const cloudinary_module_1 = require("../../uploads/cloudinary/cloudinary.module");
 let SchoolModule = class SchoolModule {
 };
 SchoolModule = __decorate([

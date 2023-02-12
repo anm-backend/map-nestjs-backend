@@ -12,10 +12,11 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       secretOrKey: 'WFFWf15115U842UGUBWF81EE858UYBY51BGBJ5E51Q',
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
-          const { token } = request?.cookies;
-          if (!token) throw new UnauthorizedException("You are not login");
+          const cookies = request?.cookies;
+          if (!cookies || !cookies.token)
+            throw new UnauthorizedException('Bạn chưa đăng nhập');
 
-          return token;
+          return cookies.token;
         },
       ]),
     });

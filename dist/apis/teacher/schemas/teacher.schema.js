@@ -9,71 +9,59 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TeacherSchema = exports.Teacher = void 0;
+exports.TeacherSchema = exports.Teacher = exports.Avatar = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const class_validator_1 = require("class-validator");
 const role_enum_1 = require("../../../auth/entities/role.enum");
-const swagger_1 = require("@nestjs/swagger");
 class Avatar {
 }
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, mongoose_1.Prop)({}),
     __metadata("design:type", String)
 ], Avatar.prototype, "public_id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, mongoose_1.Prop)({}),
     __metadata("design:type", String)
 ], Avatar.prototype, "url", void 0);
+exports.Avatar = Avatar;
 let Teacher = class Teacher extends mongoose_2.Document {
 };
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Please Enter Your Name' }),
     (0, mongoose_1.Prop)({ required: true, trim: true }),
     __metadata("design:type", String)
-], Teacher.prototype, "name", void 0);
+], Teacher.prototype, "firstName", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Please Enter Your Email' }),
-    (0, mongoose_1.Prop)({ required: true, trim: true, unique: true }),
+    (0, mongoose_1.Prop)({ required: true, trim: true }),
+    __metadata("design:type", String)
+], Teacher.prototype, "lastName", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ trim: true, unique: true }),
     __metadata("design:type", String)
 ], Teacher.prototype, "email", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Please Enter Gender' }),
-    (0, mongoose_1.Prop)({ required: true, trim: true }),
+    (0, mongoose_1.Prop)({ trim: true }),
+    __metadata("design:type", String)
+], Teacher.prototype, "phone", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, trim: true, enum: ['Nam', 'Nữ', 'Khác'] }),
     __metadata("design:type", String)
 ], Teacher.prototype, "gender", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.Min)(3, { message: 'Password should have atleast 8 chars' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Please Enter Your Password' }),
-    (0, mongoose_1.Prop)({ required: true, select: false }),
+    (0, mongoose_1.Prop)({ required: true, trim: true, unique: true }),
+    __metadata("design:type", String)
+], Teacher.prototype, "userId", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, trim: true }),
     __metadata("design:type", String)
 ], Teacher.prototype, "password", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, mongoose_1.Prop)({}),
     __metadata("design:type", Avatar)
 ], Teacher.prototype, "avatar", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, mongoose_1.Prop)({ required: true, enum: role_enum_1.Role, default: 'user' }),
     __metadata("design:type", String)
 ], Teacher.prototype, "role", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, mongoose_1.Prop)({}),
-    __metadata("design:type", String)
-], Teacher.prototype, "resetPasswordToken", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, mongoose_1.Prop)({}),
-    __metadata("design:type", Date)
-], Teacher.prototype, "resetPasswordExpire", void 0);
 Teacher = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], Teacher);

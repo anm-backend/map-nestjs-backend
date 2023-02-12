@@ -25,6 +25,7 @@ const jwt_auth_guard_1 = require("../../auth/jwt-auth.guard");
 const role_enum_1 = require("../../auth/entities/role.enum");
 const roles_decorator_1 = require("../../auth/roles.decorator");
 const roles_guard_1 = require("../../auth/roles.guard");
+const _req_login_teacher_dto_1 = require("./dto/_req.login-teacher.dto");
 let TeacherController = class TeacherController {
     constructor(userService) {
         this.userService = userService;
@@ -32,8 +33,8 @@ let TeacherController = class TeacherController {
     registerTeacher(image, createTeacherDto) {
         return this.userService.registerTeacher(image, createTeacherDto);
     }
-    loginTeacher(loginTeacher) {
-        return this.userService.loginTeacher(loginTeacher.email, loginTeacher.password);
+    login(loginTeacher) {
+        return this.userService.loginTeacher(loginTeacher);
     }
     logoutTeacher() {
     }
@@ -65,15 +66,15 @@ __decorate([
     __param(1, Method.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_teacher_dto_1.CreateTeacherDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], TeacherController.prototype, "registerTeacher", null);
 __decorate([
     Method.Post('/login'),
     __param(0, Method.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [_req_login_teacher_dto_1.RequestLoginTeacherDto]),
     __metadata("design:returntype", void 0)
-], TeacherController.prototype, "loginTeacher", null);
+], TeacherController.prototype, "login", null);
 __decorate([
     Method.Get('/logout'),
     __metadata("design:type", Function),
@@ -123,9 +124,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TeacherController.prototype, "updateProfile", null);
 __decorate([
-    Method.Get('/admin/users'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    Method.Get('/list'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -159,7 +158,10 @@ __decorate([
 ], TeacherController.prototype, "deleteTeacher", null);
 TeacherController = __decorate([
     (0, swagger_1.ApiTags)('Teacher'),
-    (0, base_routes_1.PrefixController)(),
+    (0, base_routes_1.PrefixController)('teacher'),
+    (0, swagger_1.ApiSecurity)('basic'),
+    (0, swagger_1.ApiBasicAuth)(),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [teacher_service_1.TeacherService])
 ], TeacherController);
 exports.TeacherController = TeacherController;
