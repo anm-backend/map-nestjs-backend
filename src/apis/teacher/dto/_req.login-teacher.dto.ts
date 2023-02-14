@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmptyF, MinF } from 'src/apis/base/dto/create-base.dto';
+import { IsNotEmpty, Min } from 'class-validator';
 
 export class RequestLoginTeacherDto {
   @ApiProperty()
-  @IsNotEmptyF('Mã giáo viên')
+  @IsNotEmpty({ message: 'Mã giáo viên không được bỏ trống' })
   userId: string;
 
   @ApiProperty()
-  @IsNotEmptyF('Mật khẩu')
-  // @MinF(3, 'Mật khẩu')
+  @IsNotEmpty({ message: 'Mật khẩu không được bỏ trống' })
+  @Min(3, { message: 'Mật khẩu' })
   password: string;
 }

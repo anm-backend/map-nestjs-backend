@@ -5,15 +5,15 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Avatar, Teacher } from '../schemas/teacher.schema';
-import { IsNotEmptyF, MinF } from 'src/apis/base/dto/create-base.dto';
+// import { IsNotEmptyF, MinF } from 'src/apis/base/dto/create-base.dto';
 
 export class CreateTeacherDto {
   @ApiProperty()
-  @IsNotEmptyF('Họ')
+  // @IsNotEmptyF('Họ')
   firstName: string;
 
   @ApiProperty()
-  @IsNotEmptyF('Tên')
+  // @IsNotEmptyF('Tên')
   lastName: string;
 
   @ApiProperty()
@@ -24,15 +24,15 @@ export class CreateTeacherDto {
   phone?: string;
 
   @ApiProperty()
-  @IsNotEmptyF('Giới tính')
+  // @IsNotEmptyF('Giới tính')
   gender: string;
 
   @ApiProperty()
-  @IsNotEmptyF('Mã giáo viên')
+  // @IsNotEmptyF('Mã giáo viên')
   userId: string;
 
   @ApiProperty()
-  @IsNotEmptyF('Mật khẩu')
+  // @IsNotEmptyF('Mật khẩu')
   password: string;
 
   @ApiProperty()

@@ -13,17 +13,14 @@ exports.CreateTeacherDto = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
 const teacher_schema_1 = require("../schemas/teacher.schema");
-const create_base_dto_1 = require("../../base/dto/create-base.dto");
 class CreateTeacherDto {
 }
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, create_base_dto_1.IsNotEmptyF)('Họ'),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "firstName", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, create_base_dto_1.IsNotEmptyF)('Tên'),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "lastName", void 0);
 __decorate([
@@ -37,17 +34,14 @@ __decorate([
 ], CreateTeacherDto.prototype, "phone", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, create_base_dto_1.IsNotEmptyF)('Giới tính'),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "gender", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, create_base_dto_1.IsNotEmptyF)('Mã giáo viên'),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "userId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, create_base_dto_1.IsNotEmptyF)('Mật khẩu'),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "password", void 0);
 __decorate([
