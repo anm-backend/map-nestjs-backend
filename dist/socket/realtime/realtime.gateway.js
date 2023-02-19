@@ -97,9 +97,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], RealtimeGateway.prototype, "handleMessage", null);
 RealtimeGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)(4001, {
-        cors: true,
-    }),
+    (0, websockets_1.WebSocketGateway)(),
     __metadata("design:paramtypes", [realtime_service_1.RealtimeService])
 ], RealtimeGateway);
 exports.RealtimeGateway = RealtimeGateway;

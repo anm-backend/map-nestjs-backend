@@ -14,14 +14,14 @@ import { Logger } from '@nestjs/common';
 import { Socket, Server } from 'socket.io';
 import { OnGatewayDisconnect } from '@nestjs/websockets/interfaces/hooks';
 
-// @WebSocketGateway()
+@WebSocketGateway()
 // Change Socket Gateway
-@WebSocketGateway(4001, {
+// @WebSocketGateway(4001, {
   //   path: '/websocket',
-  cors: true,
+  // cors: true,
   //   serveClient: true,
   //   namespace: '/',
-})
+// })
 export class RealtimeGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
