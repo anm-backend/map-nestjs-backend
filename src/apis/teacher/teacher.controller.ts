@@ -2,16 +2,26 @@ import * as Method from '@nestjs/common';
 import { TeacherService } from './teacher.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
-import { ApiBasicAuth, ApiBearerAuth, ApiProperty, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBasicAuth,
+  ApiBearerAuth,
+  // ApiProperty,
+  ApiSecurity,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PrefixController } from '../base/base.routes';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UploadedFile, UseGuards } from '@nestjs/common';
+import {
+  // UploadedFile,
+  UseGuards
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/entities/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
-import { SendToken } from 'src/utils/sendToken';
+// import { SendToken } from 'src/utils/sendToken';
 import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
+// import { LoginResult } from './types/login.type';
 
 @ApiTags('Teacher')
 @PrefixController('teacher')
@@ -24,11 +34,11 @@ export class TeacherController {
   @Method.Post('/register')
   @Method.UseInterceptors(FileInterceptor('image'))
   registerTeacher(
-    @UploadedFile() image: Express.Multer.File,
+    // @UploadedFile() image: Express.Multer.File,
     // @Method.Body(SETTINGS.VALIDATION_PIPE) createTeacherDto: CreateTeacherDto,
     @Method.Body() createTeacherDto: CreateTeacherDto,
-  ): Promise<SendToken> {
-    return this.userService.registerTeacher(image, createTeacherDto);
+  ) {
+    return this.userService.registerTeacher(createTeacherDto);
   }
   @Method.Post('/login')
   login(@Method.Body() loginTeacher: RequestLoginTeacherDto) {
@@ -81,8 +91,8 @@ export class TeacherController {
   }
 
   @Method.Get('/list')
-  // @UseGuards(JwtAuthGuard)
-  // @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
   getAllTeachers() {
     return this.userService.getAllTeachers();
   }

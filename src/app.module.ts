@@ -20,7 +20,7 @@ import { UploadsModule } from './uploads/uploads.module';
     ApisModule,
 
     DatabaseModule,
-    // AuthModule,
+    AuthModule,
     SocketModule,
     UploadsModule,
   ],

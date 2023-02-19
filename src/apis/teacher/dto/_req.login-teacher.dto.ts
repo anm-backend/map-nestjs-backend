@@ -8,6 +8,6 @@ export class RequestLoginTeacherDto {
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Mật khẩu không được bỏ trống' })
-  @Min(3, { message: 'Mật khẩu' })
+  // @Min(3, { message: 'Mật khẩu' })
   password: string;
 }

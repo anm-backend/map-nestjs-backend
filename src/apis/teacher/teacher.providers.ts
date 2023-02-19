@@ -1,6 +1,5 @@
 import { Connection } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
 import * as crypto from 'crypto';
 import { dbConfigs, schemaConfigs } from 'src/config/configuration';
 import { Teacher, TeacherSchema } from './schemas/teacher.schema';
@@ -8,18 +7,13 @@ import { Teacher, TeacherSchema } from './schemas/teacher.schema';
 export const teacherProviders = [
   {
     provide: schemaConfigs.TEACHER_MODEL.toString(),
+    
     useFactory(connection: Connection) {
       TeacherSchema.pre<Teacher>('save', async function (next: Function) {
         if (!this.isModified('password')) next();
 
         this.password = await bcrypt.hash(this.password, 10);
       });
-
-      TeacherSchema.methods.getJWTToken = function () {
-        return sign({ id: this._id }, process.env.JWT_SECRET, {
-          expiresIn: process.env.JWT_EXPIRE,
-        });
-      };
 
       TeacherSchema.methods.comparePassword = async function (enteredPassword) {
         return await bcrypt.compare(enteredPassword, this.password);

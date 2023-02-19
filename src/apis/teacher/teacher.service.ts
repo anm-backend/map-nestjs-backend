@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   HttpException,
   HttpStatus,
   Inject,
@@ -7,14 +6,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { CloudinaryService } from 'src/uploads/cloudinary/cloudinary.service';
-import { schemaConfigs } from 'src/config/configuration';
-import { sendToken, SendToken } from 'src/utils/sendToken';
+import { infoResult } from '../../auth/jwt/generate/generate.user.response';
+import { schemaConfigs } from '../../config/configuration';
+import { CloudinaryService } from '../../uploads/cloudinary/cloudinary.service';
 import { BaseService } from '../base/base.service';
+import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { Teacher } from './schemas/teacher.schema';
-import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 
 @Injectable()
 export class TeacherService extends BaseService<
@@ -31,9 +30,9 @@ export class TeacherService extends BaseService<
 
   // Register Teacher
   async registerTeacher(
-    image: Express.Multer.File,
+    // image: Express.Multer.File,
     createTeacherDto: CreateTeacherDto,
-  ): Promise<SendToken> {
+  ) {
     try {
       // const myCloud = await this.cloudinaryService.uploadImage(image, {
       //   folder: 'avatars',
@@ -55,32 +54,31 @@ export class TeacherService extends BaseService<
         // },
       });
       delete user.password;
-      return sendToken(user);
+      // return sendToken(user);
     } catch (error) {
       throw new UnauthorizedException([error]);
     }
   }
 
   // Login Teacher
-  async loginTeacher(loginTeacher: RequestLoginTeacherDto): Promise<SendToken> {
+  async loginTeacher(loginTeacher: RequestLoginTeacherDto) {
     const { userId, password } = loginTeacher;
     if (!userId || !password)
       throw new HttpException(
-        'Please Enter Email And Password',
+        ['Mã giáo viên và mật khẩu không được bỏ trống'],
         HttpStatus.BAD_REQUEST,
       );
 
-    const user = await this.model
-      .findOne({ userId })
-      .select(['+password', '-role', '-createdAt', '-updatedAt']);
-    if (!user) throw new UnauthorizedException(['Invalid Email']);
+    const user = await this.model.findOne({ userId }).select([]);
+    if (!user) throw new UnauthorizedException(['Tài khoản không tồn tại']);
 
     const isPasswordMatched = await user.comparePassword(password);
     if (!isPasswordMatched)
-      throw new UnauthorizedException('Invalid Email or Password');
+      throw new UnauthorizedException(['Sai mật khẩu']);
 
-    return sendToken(user);
+    return infoResult(user);
   }
+
   // Logout Teacher
   async logoutTeacher() {
     // res.cookie("token", null, {
@@ -116,7 +114,7 @@ export class TeacherService extends BaseService<
   //   try {
   //     await sendEmail({
   //       email: user.email,
-  //       templateId: process.env.SENDGRID_RESET_TEMPLATEID,
+  //       templateId: configuration().email.sendgrid_reset_templateid,
   //       data: {
   //         reset_url: resetPasswordUrl,
   //       },
@@ -196,11 +194,11 @@ export class TeacherService extends BaseService<
   // ADMIN DASHBOARD
   // Get All Teachers --ADMIN
   async getAllTeachers() {
-    const users = await this.model.find().select(['-password']);
+    const datas = await this.model.find().select(['-password']);
 
     return {
       success: true,
-      users,
+      datas,
     };
   }
 

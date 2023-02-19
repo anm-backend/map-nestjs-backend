@@ -3,29 +3,28 @@
 // https://docs.nestjs.com/middleware
 
 import {
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   UseFilters,
-  Query,
 } from '@nestjs/common';
-import { StudentService } from './student.service';
-import { CreateStudentDto } from './dto/create-student.dto';
-import { UpdateStudentDto } from './dto/update-student.dto';
 import {
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiQuery,
+  // ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
+import { HttpExceptionFilter } from '../../common/error-handle/http-exception.filter';
+import { OwnErrorFilter } from '../../common/error-handle/own-error.filter';
 import { PrefixController } from '../base/base.routes';
-import { HttpExceptionFilter } from 'src/utils/http-exception.filter';
-import { OwnErrorFilter } from 'src/utils/own-error.filter';
-import { PaginationBaseDto } from '../base/dto/pagination-base.dto';
+import { CreateStudentDto } from './dto/create-student.dto';
+import { UpdateStudentDto } from './dto/update-student.dto';
+import { StudentService } from './student.service';
+// import { PaginationBaseDto } from '../base/dto/pagination-base.dto';
 
 @ApiTags('Student')
 @PrefixController('student')
@@ -52,8 +51,7 @@ export class StudentController {
   })
   // @ApiQuery({ name: 'name', required: false })
   @Get()
-  findAll() // @Query() pagination?: PaginationBaseDto,
-  // @Query('name') name?: string,
+  findAll() // @Query('name') name?: string, // @Query() pagination?: PaginationBaseDto,
   {
     return this.studentService.findAll();
   }

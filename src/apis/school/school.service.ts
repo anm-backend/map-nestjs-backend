@@ -1,15 +1,15 @@
 import {
   BadRequestException,
-  HttpCode,
+  // HttpCode,
   Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { CloudinaryService } from 'src/uploads/cloudinary/cloudinary.service';
-import { schemaConfigs } from 'src/config/configuration';
-import { ErrorHandler } from 'src/utils/errorHandler';
-import { QueryParam } from 'src/utils/searchFeatures';
+import { ErrorHandler } from '../../common/error-handle/errorHandler';
+import { schemaConfigs } from '../../config/configuration';
+import { CloudinaryService } from '../../uploads/cloudinary/cloudinary.service';
+import { QueryParam } from '../../utils/searchFeatures';
 import { BaseService } from '../base/base.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';

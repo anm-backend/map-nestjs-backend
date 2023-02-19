@@ -1,3 +1,5 @@
+token 7d: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTY2NDFmNWJiNTVkODNhMTEyZTM0ZiIsImlhdCI6MTY3NjcyOTYzNCwiZXhwIjoxNjc3MzM0NDM0fQ.LMCqqpbpuQP0phmZhSPS7ELKYWCtOGouxt179i7bPy8
+
 https://socket.io/docs/v4/middlewares/
 https://github.com/nestjs/nest/issues/882
 https://github.com/JacobSNGoodwin/ranker-course

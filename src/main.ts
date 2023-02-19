@@ -6,8 +6,8 @@ import configuration from './config/configuration';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { ValidationPipe } from '@nestjs/common';
-import { HttpExceptionFilter } from './utils/http-exception.filter';
-import mongoose from 'mongoose';
+// import { HttpExceptionFilter } from './utils/http-exception.filter';
+// import mongoose from 'mongoose';
 
 // mongoose.set('useFindAndModify', false);
 
@@ -40,7 +40,7 @@ async function bootstrap() {
   );
   app.useGlobalPipes(
     new ValidationPipe({
-      transform: true,
+      // transform: true,
       // skipMissingProperties: true,
       // whitelist: true,
       // forbidNonWhitelisted: true,

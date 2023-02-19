@@ -1,11 +1,12 @@
 import { ConfigOptions, v2 } from 'cloudinary';
+import configuration from '../../config/configuration';
 
 export class CloudinaryProvider {
   constructor() {
     this.useFactory({
-      cloud_name: process.env.CLOUDINARY_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
+      cloud_name: configuration().cloudinary.name,
+      api_key: configuration().cloudinary.apiKey,
+      api_secret: configuration().cloudinary.apiSecret,
     });
   }
 

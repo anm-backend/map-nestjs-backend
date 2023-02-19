@@ -42,6 +42,5 @@ export class CreateTeacherDto {
   role: string;
 
   comparePassword: Function;
-  getJWTToken: Function;
   // @Match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g)
 }

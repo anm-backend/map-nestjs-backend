@@ -3,8 +3,8 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
-  NotFoundException,
-  ValidationError,
+  // NotFoundException,
+  // ValidationError,
 } from '@nestjs/common';
 
 export class OwnError {

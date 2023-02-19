@@ -40,7 +40,6 @@ export class Teacher extends Document {
   role: string;
 
   comparePassword: Function;
-  getJWTToken: Function;
 }
 
 export const TeacherSchema = SchemaFactory.createForClass(Teacher);
