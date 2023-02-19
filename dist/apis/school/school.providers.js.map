@@ -1,0 +1,1 @@
+{"version":3,"file":"school.providers.js","sourceRoot":"","sources":["../../../src/apis/school/school.providers.ts"],"names":[],"mappings":";;;AACA,8DAAoE;AACpE,2DAAuD;AAE1C,QAAA,eAAe,GAAG;IAC7B;QACE,OAAO,EAAE,6BAAa,CAAC,YAAY,CAAC,QAAQ,EAAE;QAC9C,UAAU,EAAE,CAAC,UAAsB,EAAE,EAAE,CACrC,UAAU,CAAC,KAAK,CAAC,QAAQ,EAAE,4BAAY,CAAC;QAC1C,MAAM,EAAE,CAAC,yBAAS,CAAC;KACpB;CACF,CAAC"}
