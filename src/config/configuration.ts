@@ -10,7 +10,10 @@ export default () => ({
   mongouri: process.env.MONGO_URI,
 
   jwt: {
-    expire: process.env.JWT_EXPIRE,
+    expire: {
+      access: process.env.JWT_ACCES_EXPIRE,
+      refresh: process.env.JWT_REFRESH_EXPIRE,
+    },
     secret: process.env.JWT_SECRET,
   },
 
@@ -41,6 +44,9 @@ export default () => ({
     sendgrid_reset_templateid: process.env.SENDGRID_RESET_TEMPLATEID,
   },
 });
+
+export const authKey: string = 'jwt';
+export const isPublicKey = 'publicKey';
 
 export enum schemaConfigs {
   STUDENT_MODEL,

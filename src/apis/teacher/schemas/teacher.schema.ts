@@ -36,8 +36,11 @@ export class Teacher extends Document {
   @Prop({})
   avatar?: Avatar;
 
-  @Prop({ required: true, enum: Role, default: 'user' })
+  @Prop({ required: true, enum: Role, default: Role.USER })
   role: string;
+
+  @Prop()
+  refresh: string;
 
   comparePassword: Function;
 }

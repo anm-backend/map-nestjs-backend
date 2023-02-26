@@ -1,8 +1,8 @@
-import { Logger } from '@nestjs/common';
+// import { Logger } from '@nestjs/common';
 import {
   WebSocketGateway,
   SubscribeMessage,
-  MessageBody,
+  // MessageBody,
   OnGatewayInit,
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -16,30 +16,30 @@ import { Namespace, Server, Socket } from 'socket.io';
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
-  private readonly logger: Logger = new Logger(ChatGateway.name);
+  // private readonly logger: Logger = new Logger(ChatGateway.name);
 
   @WebSocketServer() wss: Server;
   @WebSocketServer() io: Namespace;
 
   afterInit(server: Server): void {
-    this.logger.log('Initialized ChatGateway!');
+    // this.logger.log('Initialized ChatGateway!');
   }
   handleConnection(client: Socket, ...args: any[]): void {
     const sockets = this.io.sockets;
 
-    this.logger.log(`Client connected: ${client.id} ChatGateway`);
-    this.logger.debug(
-      `Number of connected sockets: ${sockets.size} ChatGateway`,
-    );
+    // this.logger.log(`Client connected: ${client.id} ChatGateway`);
+    // this.logger.debug(
+    //   `Number of connected sockets: ${sockets.size} ChatGateway`,
+    // );
     this.io.emit(`hello`, `from ${client.id}`)
   }
   handleDisconnect(client: Socket): void {
     const sockets = this.io.sockets;
 
-    this.logger.log(`Client disconnecting: ${client.id} ChatGateway`);
-    this.logger.debug(
-      `Number of connected sockets: ${sockets.size} ChatGateway`,
-    );
+    // this.logger.log(`Client disconnecting: ${client.id} ChatGateway`);
+    // this.logger.debug(
+    //   `Number of connected sockets: ${sockets.size} ChatGateway`,
+    // );
   }
 
   @SubscribeMessage('msgToServer')

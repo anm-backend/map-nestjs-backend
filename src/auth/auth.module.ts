@@ -1,12 +1,15 @@
 import { Global, Module } from '@nestjs/common';
-import { JwtAccessStrategy } from './jwtAccess.strategy';
-import { TeacherModule } from 'src/apis/teacher/teacher.module';
-import { JwtRefreshStrategy } from './jwtRefresh.strategy';
 import { JwtModule } from '@nestjs/jwt';
+import { TeacherModule } from 'src/apis/teacher/teacher.module';
+import { JwtAccessStrategy } from './jwt/jwtAccess.strategy';
+// import { JwtRefreshStrategy } from './jwt/jwtRefresh.strategy';
 
 @Global()
 @Module({
   imports: [TeacherModule, JwtModule.register({})],
-  providers: [JwtAccessStrategy, JwtRefreshStrategy],
+  providers: [
+    JwtAccessStrategy,
+    // JwtRefreshStrategy
+  ],
 })
 export class AuthModule {}

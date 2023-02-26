@@ -25,7 +25,7 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
         this.teacherModel = teacherModel;
         this.cloudinaryService = cloudinaryService;
     }
-    async registerTeacher(createTeacherDto) {
+    async register(createTeacherDto) {
         try {
             const { firstName, lastName, email, userId, gender, password } = createTeacherDto;
             const user = await this.model.create({
@@ -36,16 +36,14 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
                 password,
                 userId,
             });
-            delete user.password;
+            return (0, generate_user_response_1.infoResult)(user);
         }
         catch (error) {
             throw new common_1.UnauthorizedException([error]);
         }
     }
-    async loginTeacher(loginTeacher) {
+    async login(loginTeacher) {
         const { userId, password } = loginTeacher;
-        if (!userId || !password)
-            throw new common_1.HttpException(['Mã giáo viên và mật khẩu không được bỏ trống'], common_1.HttpStatus.BAD_REQUEST);
         const user = await this.model.findOne({ userId }).select([]);
         if (!user)
             throw new common_1.UnauthorizedException(['Tài khoản không tồn tại']);
@@ -60,21 +58,19 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
             message: 'Logged Out',
         };
     }
-    async getTeacherDetails(user) {
-        return {
-            success: true,
-            user,
-        };
-    }
-    async getAllTeachers() {
+    async getAll() {
         const datas = await this.model.find().select(['-password']);
         return {
             success: true,
             datas,
         };
     }
-    async findTeacherById(id) {
-        return await this.model.findById(id);
+    async getDetailById(id) {
+        const data = await this.model.findById(id).select(['-password']);
+        return {
+            success: true,
+            data,
+        };
     }
 };
 TeacherService = __decorate([

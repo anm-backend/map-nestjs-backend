@@ -59,9 +59,13 @@ __decorate([
     __metadata("design:type", Avatar)
 ], Teacher.prototype, "avatar", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, enum: role_enum_1.Role, default: 'user' }),
+    (0, mongoose_1.Prop)({ required: true, enum: role_enum_1.Role, default: role_enum_1.Role.USER }),
     __metadata("design:type", String)
 ], Teacher.prototype, "role", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Teacher.prototype, "refresh", void 0);
 Teacher = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], Teacher);

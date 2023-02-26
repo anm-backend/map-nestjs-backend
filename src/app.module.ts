@@ -8,6 +8,8 @@ import { DatabaseModule } from './database/database.module';
 import { GraphqlsModule } from './graphqls/graphqls.module';
 import { SocketModule } from './socket/socket.module';
 import { UploadsModule } from './uploads/uploads.module';
+// import { APP_GUARD } from '@nestjs/core';
+// import { JwtAuthGuard } from './auth/guard/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -24,7 +26,12 @@ import { UploadsModule } from './uploads/uploads.module';
     SocketModule,
     UploadsModule,
   ],
-  providers: [],
+  providers: [
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard,
+    // },
+  ],
 })
 export class AppModule {
   // @InjectConnection() private connection: Connection;

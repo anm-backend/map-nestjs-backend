@@ -1,7 +1,6 @@
 import { OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 import { Namespace, Server, Socket } from 'socket.io';
 export declare class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-    private readonly logger;
     wss: Server;
     io: Namespace;
     afterInit(server: Server): void;

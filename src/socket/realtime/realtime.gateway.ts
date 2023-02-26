@@ -10,7 +10,7 @@ import {
 import { RealtimeService } from './realtime.service';
 import { CreateRealtimeDto } from './dto/create-realtime.dto';
 import { UpdateRealtimeDto } from './dto/update-realtime.dto';
-import { Logger } from '@nestjs/common';
+// import { Logger } from '@nestjs/common';
 import { Socket, Server } from 'socket.io';
 import { OnGatewayDisconnect } from '@nestjs/websockets/interfaces/hooks';
 
@@ -28,17 +28,17 @@ export class RealtimeGateway
   @WebSocketServer() wss: Server;
 
   constructor(private readonly realtimeService: RealtimeService) {}
-  private logger: Logger = new Logger('RealtimeGateway');
+  // private logger: Logger = new Logger('RealtimeGateway');
 
   afterInit(server: Server) {
-    this.logger.log('Initialized RealtimeGateway!');
+    // this.logger.log('Initialized RealtimeGateway!');
     // throw new Error('Method not implemented.');
   }
   handleConnection(client: Socket, ...args: any[]) {
-    this.logger.log(`Client connected: ${client.id} RealtimeGateway`);
+    // this.logger.log(`Client connected: ${client.id} RealtimeGateway`);
   }
   handleDisconnect(client: Socket) {
-    this.logger.log(`Client disconnecting: ${client.id} RealtimeGateway`);
+    // this.logger.log(`Client disconnecting: ${client.id} RealtimeGateway`);
   }
 
   @SubscribeMessage('createRealtime')

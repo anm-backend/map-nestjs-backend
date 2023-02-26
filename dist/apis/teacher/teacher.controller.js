@@ -21,7 +21,7 @@ const swagger_1 = require("@nestjs/swagger");
 const base_routes_1 = require("../base/base.routes");
 const platform_express_1 = require("@nestjs/platform-express");
 const common_1 = require("@nestjs/common");
-const jwt_auth_guard_1 = require("../../auth/jwt-auth.guard");
+const jwt_auth_guard_1 = require("../../auth/guard/jwt-auth.guard");
 const role_enum_1 = require("../../auth/entities/role.enum");
 const roles_decorator_1 = require("../../auth/roles.decorator");
 const roles_guard_1 = require("../../auth/roles.guard");
@@ -30,16 +30,13 @@ let TeacherController = class TeacherController {
     constructor(userService) {
         this.userService = userService;
     }
-    registerTeacher(createTeacherDto) {
-        return this.userService.registerTeacher(createTeacherDto);
+    register(createTeacherDto) {
+        return this.userService.register(createTeacherDto);
     }
     login(loginTeacher) {
-        return this.userService.loginTeacher(loginTeacher);
+        return this.userService.login(loginTeacher);
     }
-    logoutTeacher() {
-    }
-    getTeacherDetails(req) {
-        return this.userService.getTeacherDetails(req.user);
+    logout() {
     }
     forgotPassword(id, updateTeacherDto) {
     }
@@ -47,16 +44,19 @@ let TeacherController = class TeacherController {
     }
     updatePassword(id, updateTeacherDto) {
     }
+    getProfile(req) {
+        return this.userService.getDetailById(req.user);
+    }
     updateProfile(id, updateTeacherDto) {
     }
-    getAllTeachers() {
-        return this.userService.getAllTeachers();
+    getAll() {
+        return this.userService.getAll();
     }
-    getSingleTeacher(id) {
+    getDetailById(id) {
     }
-    updateTeacherRole(id) {
+    updateById(id) {
     }
-    deleteTeacher(id) {
+    deleteById(id) {
     }
 };
 __decorate([
@@ -66,9 +66,10 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_teacher_dto_1.CreateTeacherDto]),
     __metadata("design:returntype", void 0)
-], TeacherController.prototype, "registerTeacher", null);
+], TeacherController.prototype, "register", null);
 __decorate([
     Method.Post('/login'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, Method.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [_req_login_teacher_dto_1.RequestLoginTeacherDto]),
@@ -79,15 +80,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], TeacherController.prototype, "logoutTeacher", null);
-__decorate([
-    Method.Get('/me'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    __param(0, Method.Request()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
-], TeacherController.prototype, "getTeacherDetails", null);
+], TeacherController.prototype, "logout", null);
 __decorate([
     Method.Post('/password/forgot'),
     __param(0, Method.Param('id')),
@@ -114,6 +107,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TeacherController.prototype, "updatePassword", null);
 __decorate([
+    Method.Get('/me'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, Method.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Object)
+], TeacherController.prototype, "getProfile", null);
+__decorate([
     Method.Put('/me/update'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, Method.Param('id')),
@@ -124,39 +126,41 @@ __decorate([
 ], TeacherController.prototype, "updateProfile", null);
 __decorate([
     Method.Get('/list'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], TeacherController.prototype, "getAllTeachers", null);
+], TeacherController.prototype, "getAll", null);
 __decorate([
-    Method.Get('/admin/user/:id'),
+    Method.Get('/:id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, Method.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], TeacherController.prototype, "getDetailById", null);
+__decorate([
+    Method.Put('/:id'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
     __param(0, Method.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], TeacherController.prototype, "getSingleTeacher", null);
+], TeacherController.prototype, "updateById", null);
 __decorate([
-    Method.Put('/admin/user/:id'),
+    Method.Delete('/:id'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
     __param(0, Method.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], TeacherController.prototype, "updateTeacherRole", null);
-__decorate([
-    Method.Delete('/admin/user/:id'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
-    __param(0, Method.Param('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], TeacherController.prototype, "deleteTeacher", null);
+], TeacherController.prototype, "deleteById", null);
 TeacherController = __decorate([
     (0, swagger_1.ApiTags)('Teacher'),
     (0, base_routes_1.PrefixController)('teacher'),

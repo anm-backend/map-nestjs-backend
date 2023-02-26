@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dbConfigs = exports.schemaConfigs = void 0;
+exports.dbConfigs = exports.schemaConfigs = exports.isPublicKey = exports.authKey = void 0;
 exports.default = () => ({
     port: parseInt(process.env.PORT, 10) || 3000,
     nodeEnv: process.env.NODE_ENV || 'DEVELOPEMENT' || 'PRODUCTION',
@@ -10,7 +10,10 @@ exports.default = () => ({
     },
     mongouri: process.env.MONGO_URI,
     jwt: {
-        expire: process.env.JWT_EXPIRE,
+        expire: {
+            access: process.env.JWT_ACCES_EXPIRE,
+            refresh: process.env.JWT_REFRESH_EXPIRE,
+        },
         secret: process.env.JWT_SECRET,
     },
     cloudinary: {
@@ -35,6 +38,8 @@ exports.default = () => ({
         sendgrid_reset_templateid: process.env.SENDGRID_RESET_TEMPLATEID,
     },
 });
+exports.authKey = 'jwt';
+exports.isPublicKey = 'publicKey';
 var schemaConfigs;
 (function (schemaConfigs) {
     schemaConfigs[schemaConfigs["STUDENT_MODEL"] = 0] = "STUDENT_MODEL";

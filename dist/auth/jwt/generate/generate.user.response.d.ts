@@ -9,5 +9,8 @@ export declare const infoResult: (user: Teacher) => {
         userId: string;
         role: string;
     };
-    token: string;
+    token: {
+        access_token: string;
+        refresh_token: string;
+    };
 };

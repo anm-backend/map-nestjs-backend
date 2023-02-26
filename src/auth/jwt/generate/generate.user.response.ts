@@ -1,3 +1,4 @@
+import configuration from '../../../config/configuration';
 import { Teacher } from '../../../apis/teacher/schemas/teacher.schema';
 import { generateToken } from './generate.token';
 
@@ -8,7 +9,20 @@ import { generateToken } from './generate.token';
 // }
 
 export const infoResult = (user: Teacher) => {
-  const token = generateToken({ id: user.id });
+  const accessToken = generateToken(
+    { id: user.id },
+    {
+      expiresIn: configuration().jwt.expire.access,
+    },
+  );
+  const refreshToken = generateToken(
+    { id: user.id, token: accessToken },
+    {
+      expiresIn: configuration().jwt.expire.refresh,
+    },
+  );
+
+  // Teacher.update
 
   return {
     success: true,
@@ -27,6 +41,9 @@ export const infoResult = (user: Teacher) => {
       userId: user.userId,
       role: user.role,
     },
-    token,
+    token: {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    },
   };
 };

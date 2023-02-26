@@ -17,9 +17,12 @@ function CreateSwagger(app) {
     swagger_1.SwaggerModule.setup(docs, app, document);
 }
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, {
+        logger: ['error', 'warn'],
+    });
     app.enableCors();
-    app.useGlobalFilters();
+    app
+        .useGlobalFilters();
     app.useGlobalPipes(new common_1.ValidationPipe({}));
     app.useStaticAssets((0, path_1.join)(__dirname, '..', 'static'));
     CreateSwagger(app);

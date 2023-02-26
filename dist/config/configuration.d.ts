@@ -7,7 +7,10 @@ declare const _default: () => {
     };
     mongouri: string;
     jwt: {
-        expire: string;
+        expire: {
+            access: string;
+            refresh: string;
+        };
         secret: string;
     };
     cloudinary: {
@@ -31,6 +34,8 @@ declare const _default: () => {
     };
 };
 export default _default;
+export declare const authKey: string;
+export declare const isPublicKey = "publicKey";
 export declare enum schemaConfigs {
     STUDENT_MODEL = 0,
     SCHOOL_MODEL = 1,

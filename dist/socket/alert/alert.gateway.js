@@ -11,20 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AlertGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
-const common_1 = require("@nestjs/common");
 const socket_io_1 = require("socket.io");
 let AlertGateway = class AlertGateway {
-    constructor() {
-        this.logger = new common_1.Logger('RealtimeGateway');
-    }
     afterInit(server) {
-        this.logger.log('Initialized AlertGateway!');
     }
     handleConnection(client, ...args) {
-        this.logger.log(`Client connected: ${client.id} AlertGateway`);
     }
     handleDisconnect(client) {
-        this.logger.log(`Client disconnecting: ${client.id} AlertGateway`);
     }
     sendToAll(message) {
         this.wss.emit('alertToClient', { type: 'Alert', message });

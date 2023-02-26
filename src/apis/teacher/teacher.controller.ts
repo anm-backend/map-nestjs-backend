@@ -12,15 +12,18 @@ import {
 import { PrefixController } from '../base/base.routes';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
+  HttpCode,
+  HttpStatus,
   // UploadedFile,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { Role } from 'src/auth/entities/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 // import { SendToken } from 'src/utils/sendToken';
 import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
+// import { PublicTransaction } from 'src/auth/public.transaction';
 // import { LoginResult } from './types/login.type';
 
 @ApiTags('Teacher')
@@ -31,31 +34,28 @@ import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 export class TeacherController {
   constructor(private readonly userService: TeacherService) {}
 
+  // AUTH
   @Method.Post('/register')
   @Method.UseInterceptors(FileInterceptor('image'))
-  registerTeacher(
+  register(
     // @UploadedFile() image: Express.Multer.File,
     // @Method.Body(SETTINGS.VALIDATION_PIPE) createTeacherDto: CreateTeacherDto,
     @Method.Body() createTeacherDto: CreateTeacherDto,
   ) {
-    return this.userService.registerTeacher(createTeacherDto);
+    return this.userService.register(createTeacherDto);
   }
+  // @PublicTransaction()
   @Method.Post('/login')
+  @HttpCode(HttpStatus.OK)
   login(@Method.Body() loginTeacher: RequestLoginTeacherDto) {
-    return this.userService.loginTeacher(loginTeacher);
+    return this.userService.login(loginTeacher);
   }
-
   @Method.Get('/logout')
-  logoutTeacher() {
+  logout() {
     // return this.userService.findAll();
   }
 
-  @Method.Get('/me')
-  @UseGuards(JwtAuthGuard)
-  getTeacherDetails(@Method.Request() req: any): any {
-    return this.userService.getTeacherDetails(req.user);
-  }
-
+  // PASSWORD
   @Method.Post('/password/forgot')
   forgotPassword(
     @Method.Param('id') id: string,
@@ -63,7 +63,6 @@ export class TeacherController {
   ) {
     // return this.userService.update(+id, updateTeacherDto);
   }
-
   @Method.Put('/password/reset/:token')
   resetPassword(
     @Method.Param('id') id: string,
@@ -71,7 +70,6 @@ export class TeacherController {
   ) {
     // return this.userService.update(+id, updateTeacherDto);
   }
-
   @Method.Put('/password/update')
   @UseGuards(JwtAuthGuard)
   updatePassword(
@@ -81,6 +79,13 @@ export class TeacherController {
     // return this.userService.update(+id, updateTeacherDto);
   }
 
+  // PROFILE
+  @Method.Get('/me')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  getProfile(@Method.Request() req: any): any {
+    return this.userService.getDetailById(req.user);
+  }
   @Method.Put('/me/update')
   @UseGuards(JwtAuthGuard)
   updateProfile(
@@ -90,31 +95,31 @@ export class TeacherController {
     // return this.userService.update(+id, updateTeacherDto);
   }
 
+  // TEACHER
   @Method.Get('/list')
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.ADMIN)
-  getAllTeachers() {
-    return this.userService.getAllTeachers();
-  }
-
-  @Method.Get('/admin/user/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  getSingleTeacher(@Method.Param('id') id: string) {
+  @HttpCode(HttpStatus.OK)
+  getAll() {
+    return this.userService.getAll();
+  }
+  @Method.Get('/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @HttpCode(HttpStatus.OK)
+  getDetailById(@Method.Param('id') id: string) {
     // return this.userService.remove(+id);
   }
-
-  @Method.Put('/admin/user/:id')
+  @Method.Put('/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  updateTeacherRole(@Method.Param('id') id: string) {
+  updateById(@Method.Param('id') id: string) {
     // return this.userService.remove(+id);
   }
-
-  @Method.Delete('/admin/user/:id')
+  @Method.Delete('/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  deleteTeacher(@Method.Param('id') id: string) {
+  deleteById(@Method.Param('id') id: string) {
     // return this.userService.remove(+id);
   }
 }

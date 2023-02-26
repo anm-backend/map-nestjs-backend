@@ -28,8 +28,8 @@ export class TeacherService extends BaseService<
     super(teacherModel);
   }
 
-  // Register Teacher
-  async registerTeacher(
+  // AUTH
+  async register(
     // image: Express.Multer.File,
     createTeacherDto: CreateTeacherDto,
   ) {
@@ -53,33 +53,23 @@ export class TeacherService extends BaseService<
         //   url: myCloud.secure_url,
         // },
       });
-      delete user.password;
-      // return sendToken(user);
+
+      return infoResult(user);
     } catch (error) {
       throw new UnauthorizedException([error]);
     }
   }
-
-  // Login Teacher
-  async loginTeacher(loginTeacher: RequestLoginTeacherDto) {
+  async login(loginTeacher: RequestLoginTeacherDto) {
     const { userId, password } = loginTeacher;
-    if (!userId || !password)
-      throw new HttpException(
-        ['Mã giáo viên và mật khẩu không được bỏ trống'],
-        HttpStatus.BAD_REQUEST,
-      );
 
     const user = await this.model.findOne({ userId }).select([]);
     if (!user) throw new UnauthorizedException(['Tài khoản không tồn tại']);
 
     const isPasswordMatched = await user.comparePassword(password);
-    if (!isPasswordMatched)
-      throw new UnauthorizedException(['Sai mật khẩu']);
+    if (!isPasswordMatched) throw new UnauthorizedException(['Sai mật khẩu']);
 
     return infoResult(user);
   }
-
-  // Logout Teacher
   async logoutTeacher() {
     // res.cookie("token", null, {
     //   expires: new Date(Date.now()),
@@ -91,11 +81,19 @@ export class TeacherService extends BaseService<
     };
   }
 
-  // // Get Teacher Details
-  async getTeacherDetails(user: any): Promise<any> {
+  // TEACHER
+  async getAll() {
+    const datas: Teacher[] = await this.model.find().select(['-password']);
     return {
       success: true,
-      user,
+      datas,
+    };
+  }
+  async getDetailById(id: string) {
+    const data: Teacher = await this.model.findById(id).select(['-password']);
+    return {
+      success: true,
+      data,
     };
   }
   // // Forgot Password
@@ -193,14 +191,6 @@ export class TeacherService extends BaseService<
 
   // ADMIN DASHBOARD
   // Get All Teachers --ADMIN
-  async getAllTeachers() {
-    const datas = await this.model.find().select(['-password']);
-
-    return {
-      success: true,
-      datas,
-    };
-  }
 
   // // Get Single Teacher Details --ADMIN
   // getSingleTeacher(async ){
@@ -245,10 +235,6 @@ export class TeacherService extends BaseService<
   //     success: true,
   //   });
   // });
-
-  async findTeacherById(id: string) {
-    return await this.model.findById(id);
-  }
 }
 
 // const Teacher = require("../models/userModel");

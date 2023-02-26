@@ -17,21 +17,16 @@ const websockets_1 = require("@nestjs/websockets");
 const realtime_service_1 = require("./realtime.service");
 const create_realtime_dto_1 = require("./dto/create-realtime.dto");
 const update_realtime_dto_1 = require("./dto/update-realtime.dto");
-const common_1 = require("@nestjs/common");
 const socket_io_1 = require("socket.io");
 let RealtimeGateway = class RealtimeGateway {
     constructor(realtimeService) {
         this.realtimeService = realtimeService;
-        this.logger = new common_1.Logger('RealtimeGateway');
     }
     afterInit(server) {
-        this.logger.log('Initialized RealtimeGateway!');
     }
     handleConnection(client, ...args) {
-        this.logger.log(`Client connected: ${client.id} RealtimeGateway`);
     }
     handleDisconnect(client) {
-        this.logger.log(`Client disconnecting: ${client.id} RealtimeGateway`);
     }
     create(createRealtimeDto) {
         return this.realtimeService.create(createRealtimeDto);

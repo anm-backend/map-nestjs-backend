@@ -8,7 +8,6 @@ export declare class RealtimeGateway implements OnGatewayInit, OnGatewayConnecti
     private readonly realtimeService;
     wss: Server;
     constructor(realtimeService: RealtimeService);
-    private logger;
     afterInit(server: Server): void;
     handleConnection(client: Socket, ...args: any[]): void;
     handleDisconnect(client: Socket): void;

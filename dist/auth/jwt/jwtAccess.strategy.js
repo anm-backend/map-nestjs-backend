@@ -13,18 +13,18 @@ exports.JwtAccessStrategy = void 0;
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const passport_jwt_1 = require("passport-jwt");
-const teacher_service_1 = require("../apis/teacher/teacher.service");
-const configuration_1 = require("../config/configuration");
-let JwtAccessStrategy = class JwtAccessStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, 'jwt') {
-    constructor(userService) {
+const teacher_service_1 = require("../../apis/teacher/teacher.service");
+const configuration_1 = require("../../config/configuration");
+let JwtAccessStrategy = class JwtAccessStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, configuration_1.authKey) {
+    constructor(teacherService) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: (0, configuration_1.default)().jwt.secret,
         });
-        this.userService = userService;
+        this.teacherService = teacherService;
     }
     async validate(payload) {
-        return payload;
+        return this.teacherService.getDetailById(payload.id);
     }
 };
 JwtAccessStrategy = __decorate([

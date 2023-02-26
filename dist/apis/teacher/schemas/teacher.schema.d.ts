@@ -37,6 +37,7 @@ export declare class Teacher extends Document {
     password: string;
     avatar?: Avatar;
     role: string;
+    refresh: string;
     comparePassword: Function;
 }
 export declare const TeacherSchema: import("mongoose").Schema<Teacher, import("mongoose").Model<Teacher, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Teacher>;

@@ -1,4 +1,7 @@
-import { NestFactory } from '@nestjs/core';
+import {
+  NestFactory,
+  // Reflector
+} from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -6,6 +9,7 @@ import configuration from './config/configuration';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { ValidationPipe } from '@nestjs/common';
+// import { JwtAuthGuard } from './auth/guard/jwt-auth.guard';
 // import { HttpExceptionFilter } from './utils/http-exception.filter';
 // import mongoose from 'mongoose';
 
@@ -31,13 +35,17 @@ function CreateSwagger(app: NestExpressApplication): void {
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    // logger: false,
+    logger: ['error', 'warn'],
+  });
   app.enableCors();
   // app.setGlobalPrefix('api');
-  app.useGlobalFilters(
+  app
+    .useGlobalFilters
     // new FallbackExceptionFilter(),
     // new HttpExceptionFilter(),
-  );
+    ();
   app.useGlobalPipes(
     new ValidationPipe({
       // transform: true,
@@ -47,6 +55,9 @@ async function bootstrap() {
       // disableErrorMessages: configuration().nodeEnv == 'PRODUCTION',
     }),
   );
+
+  // const reflector = new Reflector();
+  // app.useGlobalGuards(new JwtAuthGuard());
   app.useStaticAssets(join(__dirname, '..', 'static'));
 
   CreateSwagger(app);

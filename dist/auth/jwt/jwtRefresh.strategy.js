@@ -13,9 +13,9 @@ exports.JwtRefreshStrategy = void 0;
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const passport_jwt_1 = require("passport-jwt");
-const teacher_service_1 = require("../apis/teacher/teacher.service");
-const configuration_1 = require("../config/configuration");
-let JwtRefreshStrategy = class JwtRefreshStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, 'jwt') {
+const teacher_service_1 = require("../../apis/teacher/teacher.service");
+const configuration_1 = require("../../config/configuration");
+let JwtRefreshStrategy = class JwtRefreshStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, configuration_1.authKey) {
     constructor(userService) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),

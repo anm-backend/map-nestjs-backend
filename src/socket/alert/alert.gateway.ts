@@ -1,9 +1,9 @@
 import {
-  SubscribeMessage,
+  // SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Logger } from '@nestjs/common';
+// import { Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
@@ -11,16 +11,16 @@ import { Server, Socket } from 'socket.io';
 })
 export class AlertGateway {
   @WebSocketServer() wss: Server;
-  private logger: Logger = new Logger('RealtimeGateway');
+  // private logger: Logger = new Logger('RealtimeGateway');
 
   afterInit(server: Server) {
-    this.logger.log('Initialized AlertGateway!');
+    // this.logger.log('Initialized AlertGateway!');
   }
   handleConnection(client: Socket, ...args: any[]) {
-    this.logger.log(`Client connected: ${client.id} AlertGateway`);
+    // this.logger.log(`Client connected: ${client.id} AlertGateway`);
   }
   handleDisconnect(client: Socket) {
-    this.logger.log(`Client disconnecting: ${client.id} AlertGateway`);
+    // this.logger.log(`Client disconnecting: ${client.id} AlertGateway`);
   }
 
   // @SubscribeMessage('alertToServer')

@@ -8,29 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var ChatGateway_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatGateway = void 0;
-const common_1 = require("@nestjs/common");
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
-let ChatGateway = ChatGateway_1 = class ChatGateway {
-    constructor() {
-        this.logger = new common_1.Logger(ChatGateway_1.name);
-    }
+let ChatGateway = class ChatGateway {
     afterInit(server) {
-        this.logger.log('Initialized ChatGateway!');
     }
     handleConnection(client, ...args) {
         const sockets = this.io.sockets;
-        this.logger.log(`Client connected: ${client.id} ChatGateway`);
-        this.logger.debug(`Number of connected sockets: ${sockets.size} ChatGateway`);
         this.io.emit(`hello`, `from ${client.id}`);
     }
     handleDisconnect(client) {
         const sockets = this.io.sockets;
-        this.logger.log(`Client disconnecting: ${client.id} ChatGateway`);
-        this.logger.debug(`Number of connected sockets: ${sockets.size} ChatGateway`);
     }
     handleMessageVoid(client, message) {
         this.wss.to(message.room).emit('msgToClient', message);
@@ -70,7 +60,7 @@ __decorate([
     __metadata("design:paramtypes", [socket_io_1.Socket, String]),
     __metadata("design:returntype", void 0)
 ], ChatGateway.prototype, "handleLeaveRoom", null);
-ChatGateway = ChatGateway_1 = __decorate([
+ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         namespace: '/chat',
     })
