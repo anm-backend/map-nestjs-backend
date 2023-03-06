@@ -25,7 +25,7 @@ let RolesGuard = class RolesGuard {
             return true;
         const request = context.switchToHttp().getRequest();
         const user = request.user;
-        const isAccess = requiredRoles.some((roles) => user.role.includes(roles));
+        const isAccess = requiredRoles.some((roles) => user.data.role.includes(roles));
         if (!isAccess) {
             throw new common_1.UnauthorizedException(['Không có quyền truy cập']);
         }

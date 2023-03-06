@@ -35,7 +35,7 @@ export class RolesGuard implements CanActivate {
     // console.log(context.getArgByIndex(0));
     // return true
 
-    const isAccess = requiredRoles.some((roles) => user.role.includes(roles));
+    const isAccess = requiredRoles.some((roles) => user.data.role.includes(roles));
 
     if (!isAccess) {
       throw new UnauthorizedException(['Không có quyền truy cập']);
