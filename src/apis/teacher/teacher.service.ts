@@ -39,7 +39,7 @@ export class TeacherService extends BaseService<
       //   width: 150,
       //   crop: 'scale',
       // });
-      const { firstName, lastName, email, userId, gender, password } =
+      const { firstName, lastName, email, userId, gender, password, phone } =
         createTeacherDto;
       const user = await this.model.create({
         firstName,
@@ -48,6 +48,7 @@ export class TeacherService extends BaseService<
         gender,
         password,
         userId,
+        phone,
         // avatar: {
         //   public_id: myCloud.public_id,
         //   url: myCloud.secure_url,

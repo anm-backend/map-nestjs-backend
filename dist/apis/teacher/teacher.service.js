@@ -27,7 +27,7 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
     }
     async register(createTeacherDto) {
         try {
-            const { firstName, lastName, email, userId, gender, password } = createTeacherDto;
+            const { firstName, lastName, email, userId, gender, password, phone } = createTeacherDto;
             const user = await this.model.create({
                 firstName,
                 lastName,
@@ -35,6 +35,7 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
                 gender,
                 password,
                 userId,
+                phone,
             });
             return (0, generate_user_response_1.infoResult)(user);
         }
