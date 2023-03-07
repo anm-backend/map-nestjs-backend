@@ -1,11 +1,11 @@
 import { TeacherService } from './teacher.service';
-import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
+import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
 export declare class TeacherController {
     private readonly userService;
     constructor(userService: TeacherService);
-    register(createTeacherDto: CreateTeacherDto): Promise<{
+    register(requestRegisterTeacherDto: RequestRegisterTeacherDto): Promise<{
         success: boolean;
         user: {
             _id: any;

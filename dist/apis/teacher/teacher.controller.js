@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TeacherController = void 0;
 const Method = require("@nestjs/common");
 const teacher_service_1 = require("./teacher.service");
-const create_teacher_dto_1 = require("./dto/create-teacher.dto");
 const update_teacher_dto_1 = require("./dto/update-teacher.dto");
 const swagger_1 = require("@nestjs/swagger");
 const base_routes_1 = require("../base/base.routes");
@@ -26,12 +25,13 @@ const role_enum_1 = require("../../auth/entities/role.enum");
 const roles_decorator_1 = require("../../auth/roles.decorator");
 const roles_guard_1 = require("../../auth/roles.guard");
 const _req_login_teacher_dto_1 = require("./dto/_req.login-teacher.dto");
+const _req_register_teacher_dto_1 = require("./dto/_req.register-teacher.dto");
 let TeacherController = class TeacherController {
     constructor(userService) {
         this.userService = userService;
     }
-    register(createTeacherDto) {
-        return this.userService.register(createTeacherDto);
+    register(requestRegisterTeacherDto) {
+        return this.userService.register(requestRegisterTeacherDto);
     }
     login(loginTeacher) {
         return this.userService.login(loginTeacher);
@@ -53,7 +53,7 @@ __decorate([
     Method.UseInterceptors((0, platform_express_1.FileInterceptor)('image')),
     __param(0, Method.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_teacher_dto_1.CreateTeacherDto]),
+    __metadata("design:paramtypes", [_req_register_teacher_dto_1.RequestRegisterTeacherDto]),
     __metadata("design:returntype", void 0)
 ], TeacherController.prototype, "register", null);
 __decorate([

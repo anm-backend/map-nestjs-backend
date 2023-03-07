@@ -25,9 +25,9 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
         this.teacherModel = teacherModel;
         this.cloudinaryService = cloudinaryService;
     }
-    async register(createTeacherDto) {
+    async register(requestRegisterTeacherDto) {
         try {
-            const { firstName, lastName, email, userId, gender, password, phone } = createTeacherDto;
+            const { firstName, lastName, email, userId, gender, password, phone } = requestRegisterTeacherDto;
             const user = await this.model.create({
                 firstName,
                 lastName,

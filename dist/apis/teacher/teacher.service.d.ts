@@ -5,11 +5,12 @@ import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { Teacher } from './schemas/teacher.schema';
+import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
 export declare class TeacherService extends BaseService<Teacher, CreateTeacherDto | UpdateTeacherDto> {
     private teacherModel;
     private cloudinaryService;
     constructor(teacherModel: Model<Teacher, {}>, cloudinaryService: CloudinaryService);
-    register(createTeacherDto: CreateTeacherDto): Promise<{
+    register(requestRegisterTeacherDto: RequestRegisterTeacherDto): Promise<{
         success: boolean;
         user: {
             _id: any;

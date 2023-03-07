@@ -23,6 +23,7 @@ import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 // import { SendToken } from 'src/utils/sendToken';
 import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
+import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
 // import { PublicTransaction } from 'src/auth/public.transaction';
 // import { LoginResult } from './types/login.type';
 
@@ -43,9 +44,9 @@ export class TeacherController {
   register(
     // @UploadedFile() image: Express.Multer.File,
     // @Method.Body(SETTINGS.VALIDATION_PIPE) createTeacherDto: CreateTeacherDto,
-    @Method.Body() createTeacherDto: CreateTeacherDto,
+    @Method.Body() requestRegisterTeacherDto: RequestRegisterTeacherDto,
   ) {
-    return this.userService.register(createTeacherDto);
+    return this.userService.register(requestRegisterTeacherDto);
   }
   // @PublicTransaction()
   @Method.Post('/login')

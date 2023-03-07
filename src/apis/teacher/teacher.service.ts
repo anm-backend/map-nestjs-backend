@@ -14,6 +14,7 @@ import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { Teacher } from './schemas/teacher.schema';
+import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
 
 @Injectable()
 export class TeacherService extends BaseService<
@@ -31,7 +32,7 @@ export class TeacherService extends BaseService<
   // AUTH
   async register(
     // image: Express.Multer.File,
-    createTeacherDto: CreateTeacherDto,
+    requestRegisterTeacherDto: RequestRegisterTeacherDto
   ) {
     try {
       // const myCloud = await this.cloudinaryService.uploadImage(image, {
@@ -40,7 +41,7 @@ export class TeacherService extends BaseService<
       //   crop: 'scale',
       // });
       const { firstName, lastName, email, userId, gender, password, phone } =
-        createTeacherDto;
+        requestRegisterTeacherDto;
       const user = await this.model.create({
         firstName,
         lastName,
