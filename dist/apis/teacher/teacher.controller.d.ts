@@ -35,17 +35,10 @@ export declare class TeacherController {
             refresh_token: string;
         };
     }>;
-    logout(): void;
-    forgotPassword(id: string, updateTeacherDto: UpdateTeacherDto): void;
-    resetPassword(id: string, updateTeacherDto: UpdateTeacherDto): void;
-    updatePassword(id: string, updateTeacherDto: UpdateTeacherDto): void;
     getProfile(req: any): any;
     updateProfile(id: string, updateTeacherDto: UpdateTeacherDto): void;
     getAll(): Promise<{
         success: boolean;
         datas: import("./schemas/teacher.schema").Teacher[];
     }>;
-    getDetailById(id: string): void;
-    updateById(id: string): void;
-    deleteById(id: string): void;
 }

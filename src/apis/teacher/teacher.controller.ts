@@ -36,6 +36,9 @@ export class TeacherController {
 
   // AUTH
   @Method.Post('/register')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @HttpCode(HttpStatus.OK)
   @Method.UseInterceptors(FileInterceptor('image'))
   register(
     // @UploadedFile() image: Express.Multer.File,
@@ -50,34 +53,34 @@ export class TeacherController {
   login(@Method.Body() loginTeacher: RequestLoginTeacherDto) {
     return this.userService.login(loginTeacher);
   }
-  @Method.Get('/logout')
-  logout() {
-    // return this.userService.findAll();
-  }
+  // @Method.Get('/logout')
+  // logout() {
+  //   // return this.userService.findAll();
+  // }
 
-  // PASSWORD
-  @Method.Post('/password/forgot')
-  forgotPassword(
-    @Method.Param('id') id: string,
-    @Method.Body() updateTeacherDto: UpdateTeacherDto,
-  ) {
-    // return this.userService.update(+id, updateTeacherDto);
-  }
-  @Method.Put('/password/reset/:token')
-  resetPassword(
-    @Method.Param('id') id: string,
-    @Method.Body() updateTeacherDto: UpdateTeacherDto,
-  ) {
-    // return this.userService.update(+id, updateTeacherDto);
-  }
-  @Method.Put('/password/update')
-  @UseGuards(JwtAuthGuard)
-  updatePassword(
-    @Method.Param('id') id: string,
-    @Method.Body() updateTeacherDto: UpdateTeacherDto,
-  ) {
-    // return this.userService.update(+id, updateTeacherDto);
-  }
+  // // PASSWORD
+  // @Method.Post('/password/forgot')
+  // forgotPassword(
+  //   @Method.Param('id') id: string,
+  //   @Method.Body() updateTeacherDto: UpdateTeacherDto,
+  // ) {
+  //   // return this.userService.update(+id, updateTeacherDto);
+  // }
+  // @Method.Put('/password/reset/:token')
+  // resetPassword(
+  //   @Method.Param('id') id: string,
+  //   @Method.Body() updateTeacherDto: UpdateTeacherDto,
+  // ) {
+  //   // return this.userService.update(+id, updateTeacherDto);
+  // }
+  // @Method.Put('/password/update')
+  // @UseGuards(JwtAuthGuard)
+  // updatePassword(
+  //   @Method.Param('id') id: string,
+  //   @Method.Body() updateTeacherDto: UpdateTeacherDto,
+  // ) {
+  //   // return this.userService.update(+id, updateTeacherDto);
+  // }
 
   // PROFILE
   @Method.Get('/me')
@@ -103,23 +106,23 @@ export class TeacherController {
   getAll() {
     return this.userService.getAll();
   }
-  @Method.Get('/:id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
-  @HttpCode(HttpStatus.OK)
-  getDetailById(@Method.Param('id') id: string) {
-    // return this.userService.remove(+id);
-  }
-  @Method.Put('/:id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
-  updateById(@Method.Param('id') id: string) {
-    // return this.userService.remove(+id);
-  }
-  @Method.Delete('/:id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
-  deleteById(@Method.Param('id') id: string) {
-    // return this.userService.remove(+id);
-  }
+  // @Method.Get('/:id')
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.ADMIN)
+  // @HttpCode(HttpStatus.OK)
+  // getDetailById(@Method.Param('id') id: string) {
+  //   // return this.userService.remove(+id);
+  // }
+  // @Method.Put('/:id')
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.ADMIN)
+  // updateById(@Method.Param('id') id: string) {
+  //   // return this.userService.remove(+id);
+  // }
+  // @Method.Delete('/:id')
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.ADMIN)
+  // deleteById(@Method.Param('id') id: string) {
+  //   // return this.userService.remove(+id);
+  // }
 }

@@ -36,14 +36,6 @@ let TeacherController = class TeacherController {
     login(loginTeacher) {
         return this.userService.login(loginTeacher);
     }
-    logout() {
-    }
-    forgotPassword(id, updateTeacherDto) {
-    }
-    resetPassword(id, updateTeacherDto) {
-    }
-    updatePassword(id, updateTeacherDto) {
-    }
     getProfile(req) {
         return this.userService.getDetailById(req.user);
     }
@@ -52,15 +44,12 @@ let TeacherController = class TeacherController {
     getAll() {
         return this.userService.getAll();
     }
-    getDetailById(id) {
-    }
-    updateById(id) {
-    }
-    deleteById(id) {
-    }
 };
 __decorate([
     Method.Post('/register'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     Method.UseInterceptors((0, platform_express_1.FileInterceptor)('image')),
     __param(0, Method.Body()),
     __metadata("design:type", Function),
@@ -75,37 +64,6 @@ __decorate([
     __metadata("design:paramtypes", [_req_login_teacher_dto_1.RequestLoginTeacherDto]),
     __metadata("design:returntype", void 0)
 ], TeacherController.prototype, "login", null);
-__decorate([
-    Method.Get('/logout'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], TeacherController.prototype, "logout", null);
-__decorate([
-    Method.Post('/password/forgot'),
-    __param(0, Method.Param('id')),
-    __param(1, Method.Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_teacher_dto_1.UpdateTeacherDto]),
-    __metadata("design:returntype", void 0)
-], TeacherController.prototype, "forgotPassword", null);
-__decorate([
-    Method.Put('/password/reset/:token'),
-    __param(0, Method.Param('id')),
-    __param(1, Method.Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_teacher_dto_1.UpdateTeacherDto]),
-    __metadata("design:returntype", void 0)
-], TeacherController.prototype, "resetPassword", null);
-__decorate([
-    Method.Put('/password/update'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    __param(0, Method.Param('id')),
-    __param(1, Method.Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_teacher_dto_1.UpdateTeacherDto]),
-    __metadata("design:returntype", void 0)
-], TeacherController.prototype, "updatePassword", null);
 __decorate([
     Method.Get('/me'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
@@ -133,34 +91,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], TeacherController.prototype, "getAll", null);
-__decorate([
-    Method.Get('/:id'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
-    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, Method.Param('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], TeacherController.prototype, "getDetailById", null);
-__decorate([
-    Method.Put('/:id'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
-    __param(0, Method.Param('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], TeacherController.prototype, "updateById", null);
-__decorate([
-    Method.Delete('/:id'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
-    __param(0, Method.Param('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], TeacherController.prototype, "deleteById", null);
 TeacherController = __decorate([
     (0, swagger_1.ApiTags)('Teacher'),
     (0, base_routes_1.PrefixController)('teacher'),
