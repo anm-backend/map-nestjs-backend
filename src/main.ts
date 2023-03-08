@@ -18,7 +18,7 @@ import { ValidationPipe } from '@nestjs/common';
 function CreateSwagger(app: NestExpressApplication): void {
   const docs = '/docs';
   const config = new DocumentBuilder()
-    // .addBearerAuth()
+    .addBearerAuth()
     // .addSecurity('basic', {
     //   type: 'http',
     //   scheme: 'basic',

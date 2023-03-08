@@ -26,6 +26,8 @@ const roles_decorator_1 = require("../../auth/roles.decorator");
 const roles_guard_1 = require("../../auth/roles.guard");
 const _req_login_teacher_dto_1 = require("./dto/_req.login-teacher.dto");
 const _req_register_teacher_dto_1 = require("./dto/_req.register-teacher.dto");
+const _res_list_teacher_dto_1 = require("./dto/_res.list-teacher.dto");
+const pagination_base_dto_1 = require("../base/dto/pagination-base.dto");
 let TeacherController = class TeacherController {
     constructor(userService) {
         this.userService = userService;
@@ -41,8 +43,8 @@ let TeacherController = class TeacherController {
     }
     updateProfile(id, updateTeacherDto) {
     }
-    getAll() {
-        return this.userService.getAll();
+    getAll(page = 1, limit = 5, search = '') {
+        return this.userService.getAll(new pagination_base_dto_1.PaginationBaseDto(page, limit), search);
     }
 };
 __decorate([
@@ -86,16 +88,39 @@ __decorate([
     Method.Get('/list'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    (0, swagger_1.ApiQuery)({
+        name: 'page',
+        type: Number,
+        required: false,
+        description: 'Number of pages',
+        example: '1',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'limit',
+        type: Number,
+        required: false,
+        description: 'Number of response record',
+        example: '5',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'search',
+        type: String,
+        required: false,
+        description: 'Search data by key',
+        example: '{"name": "some one"}',
+    }),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    (0, swagger_1.ApiOkResponse)({ type: _res_list_teacher_dto_1.ResponseListTeacherDto }),
+    __param(0, Method.Query('page', new Method.DefaultValuePipe(1), Method.ParseIntPipe)),
+    __param(1, Method.Query('limit', new Method.DefaultValuePipe(5), Method.ParseIntPipe)),
+    __param(2, Method.Query('search', new Method.DefaultValuePipe(''))),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Number, Number, String]),
+    __metadata("design:returntype", Promise)
 ], TeacherController.prototype, "getAll", null);
 TeacherController = __decorate([
     (0, swagger_1.ApiTags)('Teacher'),
     (0, base_routes_1.PrefixController)('teacher'),
-    (0, swagger_1.ApiSecurity)('basic'),
-    (0, swagger_1.ApiBasicAuth)(),
     (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [teacher_service_1.TeacherService])
 ], TeacherController);

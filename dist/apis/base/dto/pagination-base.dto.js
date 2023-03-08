@@ -12,13 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaginationBaseDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 class PaginationBaseDto {
+    constructor(page, limit) {
+        this.page = page;
+        this.limit = limit;
+    }
 }
 __decorate([
     (0, swagger_1.ApiProperty)({ default: 1, required: false }),
     __metadata("design:type", Number)
 ], PaginationBaseDto.prototype, "page", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ default: 10, required: false }),
+    (0, swagger_1.ApiProperty)({ default: 5, required: false }),
     __metadata("design:type", Number)
 ], PaginationBaseDto.prototype, "limit", void 0);
 exports.PaginationBaseDto = PaginationBaseDto;

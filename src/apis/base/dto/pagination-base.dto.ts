@@ -1,9 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class PaginationBaseDto {
-  @ApiProperty({ default: 1, required: false })
-  page?: number;
+  constructor(page: number, limit: number) {
+    this.page = page;
+    this.limit = limit;
+  }
 
-  @ApiProperty({ default: 10, required: false })
-  limit?: number;
+  @ApiProperty({ default: 1, required: false })
+  page: number;
+
+  @ApiProperty({ default: 5, required: false })
+  limit: number;
 }

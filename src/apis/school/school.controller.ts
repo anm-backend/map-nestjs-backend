@@ -1,9 +1,9 @@
-// import * as Method from '@nestjs/common';
+import * as Method from '@nestjs/common';
 import { SchoolService } from './school.service';
 // import { CreateSchoolDto } from './dto/create-school.dto';
 // import { UpdateSchoolDto } from './dto/update-school.dto';
 import { ApiTags } from '@nestjs/swagger';
-// import { QueryParam } from 'src/utils/searchFeatures';
+import { QueryParam } from '../../utils/searchFeatures';
 import { PrefixController } from '../base/base.routes';
 // import { FilesInterceptor } from '@nestjs/platform-express';
 // import {
@@ -22,19 +22,16 @@ import { PrefixController } from '../base/base.routes';
 @PrefixController('school')
 export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}
-
-  // @Method.Get()
-  // getAllSchools(@Method.Query() query: QueryParam) {
-  //   return this.schoolService.getAllSchools(query);
-  // }
-  // @Method.Get('/all')
-  // getSchools() {
-  //   return this.schoolService.getSchools();
-  // }
-  // @Method.Get('/:id')
-  // getSchoolDetails(@Method.Param('id') id: string) {
-  //   return this.schoolService.getSchoolDetails((id = id));
-  // }
+  // SCHOOL
+  @Method.Get()
+  getAll(@Method.Query() query: QueryParam) {
+    return this.schoolService.getAllSchools(query);
+    // return this.schoolService.getSchools();
+  }
+  @Method.Get('/:id')
+  getDetailById(@Method.Param('id') id: string) {
+    return this.schoolService.getSchoolDetails((id = id));
+  }
 
   // @Method.Get('/admin/schools')
   // @UseGuards(JwtAuthGuard, RolesGuard)

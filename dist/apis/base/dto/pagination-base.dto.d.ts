@@ -1,4 +1,5 @@
 export declare class PaginationBaseDto {
-    page?: number;
-    limit?: number;
+    constructor(page: number, limit: number);
+    page: number;
+    limit: number;
 }

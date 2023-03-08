@@ -9,6 +9,7 @@ const common_1 = require("@nestjs/common");
 function CreateSwagger(app) {
     const docs = '/docs';
     const config = new swagger_1.DocumentBuilder()
+        .addBearerAuth()
         .setTitle('Map Find School')
         .setDescription('This is an api document for `Map Find School` Project')
         .setVersion('1.0')

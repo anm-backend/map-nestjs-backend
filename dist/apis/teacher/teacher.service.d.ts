@@ -6,6 +6,8 @@ import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { Teacher } from './schemas/teacher.schema';
 import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
+import { ResponseListTeacherDto } from './dto/_res.list-teacher.dto';
+import { PaginationBaseDto } from '../base/dto/pagination-base.dto';
 export declare class TeacherService extends BaseService<Teacher, CreateTeacherDto | UpdateTeacherDto> {
     private teacherModel;
     private cloudinaryService;
@@ -44,10 +46,7 @@ export declare class TeacherService extends BaseService<Teacher, CreateTeacherDt
         success: boolean;
         message: string;
     }>;
-    getAll(): Promise<{
-        success: boolean;
-        datas: Teacher[];
-    }>;
+    getAll(paginationBaseDto: PaginationBaseDto, search: string): Promise<ResponseListTeacherDto>;
     getDetailById(id: string): Promise<{
         success: boolean;
         data: Teacher;

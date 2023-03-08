@@ -59,12 +59,26 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
             message: 'Logged Out',
         };
     }
-    async getAll() {
-        const datas = await this.model.find().select(['-password']);
-        return {
-            success: true,
-            datas,
-        };
+    async getAll(paginationBaseDto, search) {
+        const { page, limit } = paginationBaseDto;
+        try {
+            const searchData = JSON.parse(search.trim().length === 0 ? '{}' : search);
+            const datas = await this.model
+                .find(searchData)
+                .skip((page - 1) * limit)
+                .limit(limit)
+                .select(['-password']);
+            const numberOfPages = Math.ceil((await this.model.countDocuments()) / limit);
+            return {
+                success: true,
+                page,
+                numberOfPages,
+                datas,
+            };
+        }
+        catch (_a) {
+            throw new common_1.BadRequestException(['Dữ liệu tìm kiếm sai định dạng']);
+        }
     }
     async getDetailById(id) {
         const data = await this.model.findById(id).select(['-password']);

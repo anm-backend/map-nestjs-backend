@@ -2,6 +2,7 @@ import { TeacherService } from './teacher.service';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
+import { ResponseListTeacherDto } from './dto/_res.list-teacher.dto';
 export declare class TeacherController {
     private readonly userService;
     constructor(userService: TeacherService);
@@ -37,8 +38,5 @@ export declare class TeacherController {
     }>;
     getProfile(req: any): any;
     updateProfile(id: string, updateTeacherDto: UpdateTeacherDto): void;
-    getAll(): Promise<{
-        success: boolean;
-        datas: import("./schemas/teacher.schema").Teacher[];
-    }>;
+    getAll(page?: number, limit?: number, search?: string): Promise<ResponseListTeacherDto>;
 }

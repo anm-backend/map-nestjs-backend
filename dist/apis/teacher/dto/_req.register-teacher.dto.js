@@ -9,9 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestRegisterTeacherDto = void 0;
+exports.RequestRegisterTeacherDto = exports.UserRole = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+var UserRole;
+(function (UserRole) {
+    UserRole["Admin"] = "Admin";
+    UserRole["Moderator"] = "Moderator";
+    UserRole["User"] = "User";
+})(UserRole = exports.UserRole || (exports.UserRole = {}));
 class RequestRegisterTeacherDto {
 }
 __decorate([
@@ -25,7 +31,7 @@ __decorate([
     __metadata("design:type", String)
 ], RequestRegisterTeacherDto.prototype, "lastName", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ enum: ['Admin', 'Moderator', 'User'] }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Giới tính giáo viên không được bỏ trống' }),
     __metadata("design:type", String)
 ], RequestRegisterTeacherDto.prototype, "gender", void 0);

@@ -9,20 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestLoginTeacherDto = void 0;
+exports.ResponseListTeacherDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_validator_1 = require("class-validator");
-class RequestLoginTeacherDto {
+class ResponseListTeacherDto {
 }
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'admin' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Mã giáo viên không được bỏ trống' }),
-    __metadata("design:type", String)
-], RequestLoginTeacherDto.prototype, "userId", void 0);
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], ResponseListTeacherDto.prototype, "success", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'admin' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Mật khẩu không được bỏ trống' }),
-    __metadata("design:type", String)
-], RequestLoginTeacherDto.prototype, "password", void 0);
-exports.RequestLoginTeacherDto = RequestLoginTeacherDto;
-//# sourceMappingURL=_req.login-teacher.dto.js.map
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], ResponseListTeacherDto.prototype, "page", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], ResponseListTeacherDto.prototype, "numberOfPages", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Array)
+], ResponseListTeacherDto.prototype, "datas", void 0);
+exports.ResponseListTeacherDto = ResponseListTeacherDto;
+//# sourceMappingURL=_res.list-teacher.dto.js.map

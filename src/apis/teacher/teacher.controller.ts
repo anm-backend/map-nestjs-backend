@@ -5,6 +5,8 @@ import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import {
   ApiBasicAuth,
   ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
   // ApiProperty,
   ApiSecurity,
   ApiTags,
@@ -24,13 +26,14 @@ import { RolesGuard } from 'src/auth/roles.guard';
 // import { SendToken } from 'src/utils/sendToken';
 import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
+import { Teacher } from './schemas/teacher.schema';
+import { ResponseListTeacherDto } from './dto/_res.list-teacher.dto';
+import { PaginationBaseDto } from '../base/dto/pagination-base.dto';
 // import { PublicTransaction } from 'src/auth/public.transaction';
 // import { LoginResult } from './types/login.type';
 
 @ApiTags('Teacher')
 @PrefixController('teacher')
-@ApiSecurity('basic')
-@ApiBasicAuth()
 @ApiBearerAuth()
 export class TeacherController {
   constructor(private readonly userService: TeacherService) {}
@@ -103,9 +106,39 @@ export class TeacherController {
   @Method.Get('/list')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
+  // @ApiQuery({ type: PaginationBaseDto })
+  @ApiQuery({
+    name: 'page',
+    type: Number,
+    required: false,
+    description: 'Number of pages',
+    example: '1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: Number,
+    required: false,
+    description: 'Number of response record',
+    example: '5',
+  })
+  @ApiQuery({
+    name: 'search',
+    type: String,
+    required: false,
+    description: 'Search data by key',
+    example: '{"name": "some one"}',
+  })
   @HttpCode(HttpStatus.OK)
-  getAll() {
-    return this.userService.getAll();
+  @ApiOkResponse({ type: ResponseListTeacherDto })
+  getAll(
+    @Method.Query('page', new Method.DefaultValuePipe(1), Method.ParseIntPipe)
+    page: number = 1,
+    @Method.Query('limit', new Method.DefaultValuePipe(5), Method.ParseIntPipe)
+    limit: number = 5,
+    @Method.Query('search', new Method.DefaultValuePipe(''))
+    search: string = '',
+  ): Promise<ResponseListTeacherDto> {
+    return this.userService.getAll(new PaginationBaseDto(page, limit), search);
   }
   // @Method.Get('/:id')
   // @UseGuards(JwtAuthGuard, RolesGuard)

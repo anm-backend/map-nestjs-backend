@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   HttpException,
   HttpStatus,
   Inject,
@@ -15,6 +16,8 @@ import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { Teacher } from './schemas/teacher.schema';
 import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
+import { ResponseListTeacherDto } from './dto/_res.list-teacher.dto';
+import { PaginationBaseDto } from '../base/dto/pagination-base.dto';
 
 @Injectable()
 export class TeacherService extends BaseService<
@@ -32,7 +35,7 @@ export class TeacherService extends BaseService<
   // AUTH
   async register(
     // image: Express.Multer.File,
-    requestRegisterTeacherDto: RequestRegisterTeacherDto
+    requestRegisterTeacherDto: RequestRegisterTeacherDto,
   ) {
     try {
       // const myCloud = await this.cloudinaryService.uploadImage(image, {
@@ -84,12 +87,32 @@ export class TeacherService extends BaseService<
   }
 
   // TEACHER
-  async getAll() {
-    const datas: Teacher[] = await this.model.find().select(['-password']);
-    return {
-      success: true,
-      datas,
-    };
+  async getAll(
+    paginationBaseDto: PaginationBaseDto,
+    search: string,
+  ): Promise<ResponseListTeacherDto> {
+    const { page, limit } = paginationBaseDto;
+    try {
+      const searchData = JSON.parse(search.trim().length === 0 ? '{}' : search);
+
+      const datas: Teacher[] = await this.model
+        .find(searchData)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .select(['-password']);
+      const numberOfPages: number = Math.ceil(
+        (await this.model.countDocuments()) / limit,
+      );
+
+      return {
+        success: true,
+        page,
+        numberOfPages,
+        datas,
+      };
+    } catch {
+      throw new BadRequestException(['Dữ liệu tìm kiếm sai định dạng']);
+    }
   }
   async getDetailById(id: string) {
     const data: Teacher = await this.model.findById(id).select(['-password']);

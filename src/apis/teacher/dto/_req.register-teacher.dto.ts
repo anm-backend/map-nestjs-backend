@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, Min } from 'class-validator';
 
+export enum UserRole {
+  Admin = 'Admin',
+  Moderator = 'Moderator',
+  User = 'User',
+}
+
 export class RequestRegisterTeacherDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'Họ giáo viên không được bỏ trống' })
@@ -10,9 +16,9 @@ export class RequestRegisterTeacherDto {
   @IsNotEmpty({ message: 'Tên giáo viên không được bỏ trống' })
   lastName: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: ['Admin', 'Moderator', 'User'] })
   @IsNotEmpty({ message: 'Giới tính giáo viên không được bỏ trống' })
-  gender: string;
+  gender: UserRole;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Email giáo viên không được bỏ trống' })
