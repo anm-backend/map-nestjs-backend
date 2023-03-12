@@ -39,4 +39,12 @@ export declare class TeacherController {
     getProfile(req: any): any;
     updateProfile(id: string, updateTeacherDto: UpdateTeacherDto): void;
     getAll(page?: number, limit?: number, search?: string): Promise<ResponseListTeacherDto>;
+    getDetailById(id: string): Promise<{
+        success: boolean;
+        data: import("./schemas/teacher.schema").Teacher;
+    }>;
+    deleteById(id: string): Promise<{
+        success: boolean;
+        data: import("./schemas/teacher.schema").Teacher;
+    }>;
 }

@@ -82,6 +82,18 @@ let TeacherService = class TeacherService extends base_service_1.BaseService {
     }
     async getDetailById(id) {
         const data = await this.model.findById(id).select(['-password']);
+        if (!data)
+            throw new common_1.NotFoundException([`Giáo viên không tồn tại`]);
+        return {
+            success: true,
+            data,
+        };
+    }
+    async deleteById(id) {
+        const data = await this.model.findById(id).select(['-password']);
+        if (!data)
+            throw new common_1.NotFoundException([`Giáo viên không tồn tại`]);
+        await data.remove();
         return {
             success: true,
             data,

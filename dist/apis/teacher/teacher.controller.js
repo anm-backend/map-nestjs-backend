@@ -46,6 +46,12 @@ let TeacherController = class TeacherController {
     getAll(page = 1, limit = 5, search = '') {
         return this.userService.getAll(new pagination_base_dto_1.PaginationBaseDto(page, limit), search);
     }
+    getDetailById(id) {
+        return this.userService.getDetailById(id);
+    }
+    deleteById(id) {
+        return this.userService.deleteById(id);
+    }
 };
 __decorate([
     Method.Post('/register'),
@@ -87,7 +93,7 @@ __decorate([
 __decorate([
     Method.Get('/list'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN, role_enum_1.Role.USER),
     (0, swagger_1.ApiQuery)({
         name: 'page',
         type: Number,
@@ -118,6 +124,25 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number, String]),
     __metadata("design:returntype", Promise)
 ], TeacherController.prototype, "getAll", null);
+__decorate([
+    Method.Get('/:id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN, role_enum_1.Role.USER),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, Method.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], TeacherController.prototype, "getDetailById", null);
+__decorate([
+    Method.Delete('/:id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    __param(0, Method.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], TeacherController.prototype, "deleteById", null);
 TeacherController = __decorate([
     (0, swagger_1.ApiTags)('Teacher'),
     (0, base_routes_1.PrefixController)('teacher'),

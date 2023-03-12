@@ -15,7 +15,7 @@ const auth_module_1 = require("./auth/auth.module");
 const configuration_1 = require("./config/configuration");
 const database_module_1 = require("./database/database.module");
 const graphqls_module_1 = require("./graphqls/graphqls.module");
-const socket_module_1 = require("./socket/socket.module");
+const socket_module_1 = require("./gateway/socket.module");
 const uploads_module_1 = require("./uploads/uploads.module");
 let AppModule = class AppModule {
     onModuleInit() {

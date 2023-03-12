@@ -14,7 +14,7 @@ export class RolesGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     // const roles = this.reflector.get<string[]>(
     // const requiredRoles = this.reflector.get<string[]>(
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>('roles', [
+    const requiredRoles: Role[] = this.reflector.getAllAndOverride<Role[]>('roles', [
       //   'roles',
       //   context.getHandler(),
       context.getHandler(),
@@ -36,6 +36,11 @@ export class RolesGuard implements CanActivate {
     // return true
 
     const isAccess = requiredRoles.some((roles) => user.data.role.includes(roles));
+    // const isAccess = false;
+
+    // switch (requiredRoles.some((roles) => user.data.role.includes(roles))) {
+    //   case Roles.
+    // }
 
     if (!isAccess) {
       throw new UnauthorizedException(['Không có quyền truy cập']);

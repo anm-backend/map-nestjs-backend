@@ -1,14 +1,14 @@
 import * as Method from '@nestjs/common';
 import { TeacherService } from './teacher.service';
-import { CreateTeacherDto } from './dto/create-teacher.dto';
+// import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import {
-  ApiBasicAuth,
+  // ApiBasicAuth,
   ApiBearerAuth,
   ApiOkResponse,
   ApiQuery,
   // ApiProperty,
-  ApiSecurity,
+  // ApiSecurity,
   ApiTags,
 } from '@nestjs/swagger';
 import { PrefixController } from '../base/base.routes';
@@ -26,7 +26,7 @@ import { RolesGuard } from 'src/auth/roles.guard';
 // import { SendToken } from 'src/utils/sendToken';
 import { RequestLoginTeacherDto } from './dto/_req.login-teacher.dto';
 import { RequestRegisterTeacherDto } from './dto/_req.register-teacher.dto';
-import { Teacher } from './schemas/teacher.schema';
+// import { Teacher } from './schemas/teacher.schema';
 import { ResponseListTeacherDto } from './dto/_res.list-teacher.dto';
 import { PaginationBaseDto } from '../base/dto/pagination-base.dto';
 // import { PublicTransaction } from 'src/auth/public.transaction';
@@ -105,7 +105,7 @@ export class TeacherController {
   // TEACHER
   @Method.Get('/list')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.USER)
   // @ApiQuery({ type: PaginationBaseDto })
   @ApiQuery({
     name: 'page',
@@ -140,23 +140,23 @@ export class TeacherController {
   ): Promise<ResponseListTeacherDto> {
     return this.userService.getAll(new PaginationBaseDto(page, limit), search);
   }
-  // @Method.Get('/:id')
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles(Role.ADMIN)
-  // @HttpCode(HttpStatus.OK)
-  // getDetailById(@Method.Param('id') id: string) {
-  //   // return this.userService.remove(+id);
-  // }
+  @Method.Get('/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.USER)
+  @HttpCode(HttpStatus.OK)
+  getDetailById(@Method.Param('id') id: string) {
+    return this.userService.getDetailById(id);
+  }
   // @Method.Put('/:id')
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.ADMIN)
   // updateById(@Method.Param('id') id: string) {
-  //   // return this.userService.remove(+id);
+  //   return this.userService.updateById(id);
   // }
-  // @Method.Delete('/:id')
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles(Role.ADMIN)
-  // deleteById(@Method.Param('id') id: string) {
-  //   // return this.userService.remove(+id);
-  // }
+  @Method.Delete('/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  deleteById(@Method.Param('id') id: string) {
+    return this.userService.deleteById(id);
+  }
 }

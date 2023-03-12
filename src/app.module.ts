@@ -6,7 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { DatabaseModule } from './database/database.module';
 import { GraphqlsModule } from './graphqls/graphqls.module';
-import { SocketModule } from './socket/socket.module';
+import { SocketModule } from './gateway/socket.module';
 import { UploadsModule } from './uploads/uploads.module';
 // import { APP_GUARD } from '@nestjs/core';
 // import { JwtAuthGuard } from './auth/guard/jwt-auth.guard';

@@ -9,7 +9,7 @@ import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   namespace: '/alert',
 })
-export class AlertGateway {
+export class SocketGateway {
   @WebSocketServer() wss: Server;
   // private logger: Logger = new Logger('RealtimeGateway');
 

@@ -4,6 +4,7 @@ import {
   HttpStatus,
   Inject,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Model } from 'mongoose';
@@ -116,6 +117,37 @@ export class TeacherService extends BaseService<
   }
   async getDetailById(id: string) {
     const data: Teacher = await this.model.findById(id).select(['-password']);
+
+    if (!data) throw new NotFoundException([`Giáo viên không tồn tại`]);
+
+    return {
+      success: true,
+      data,
+    };
+  }
+  // updateTeacherRole(async ){
+  //   const newTeacherData = {
+  //     name: req.body.name,
+  //     email: req.body.email,
+  //     gender: req.body.gender,
+  //     role: req.body.role,
+  //   };
+  //   await Teacher.findByIdAndUpdate(req.params.id, newTeacherData, {
+  //     new: true,
+  //     runValidators: true,
+  //     useFindAndModify: false,
+  //   });
+  //   return {
+  //     success: true,
+  //   });
+  // });
+  async deleteById(id: string) {
+    const data: Teacher = await this.model.findById(id).select(['-password']);
+
+    if (!data) throw new NotFoundException([`Giáo viên không tồn tại`]);
+
+    await data.remove();
+
     return {
       success: true,
       data,
@@ -216,50 +248,6 @@ export class TeacherService extends BaseService<
 
   // ADMIN DASHBOARD
   // Get All Teachers --ADMIN
-
-  // // Get Single Teacher Details --ADMIN
-  // getSingleTeacher(async ){
-  //   const user = await Teacher.findById(req.params.id);
-  //   if (!user) {
-  //     return next(
-  //       new ErrorHandler(`Teacher doesn't exist with id: ${req.params.id}`, 404)
-  //     );
-  //   }
-  //   return {
-  //     success: true,
-  //     user,
-  //   });
-  // });
-  // // Update Teacher Role --ADMIN
-  // updateTeacherRole(async ){
-  //   const newTeacherData = {
-  //     name: req.body.name,
-  //     email: req.body.email,
-  //     gender: req.body.gender,
-  //     role: req.body.role,
-  //   };
-  //   await Teacher.findByIdAndUpdate(req.params.id, newTeacherData, {
-  //     new: true,
-  //     runValidators: true,
-  //     useFindAndModify: false,
-  //   });
-  //   return {
-  //     success: true,
-  //   });
-  // });
-  // // Delete Role --ADMIN
-  // deleteTeacher(async ){
-  //   const user = await Teacher.findById(req.params.id);
-  //   if (!user) {
-  //     return next(
-  //       new ErrorHandler(`Teacher doesn't exist with id: ${req.params.id}`, 404)
-  //     );
-  //   }
-  //   await user.remove();
-  //   return {
-  //     success: true,
-  //   });
-  // });
 }
 
 // const Teacher = require("../models/userModel");

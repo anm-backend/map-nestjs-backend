@@ -11,12 +11,13 @@ const common_1 = require("@nestjs/common");
 const school_module_1 = require("./school/school.module");
 const teacher_module_1 = require("./teacher/teacher.module");
 const student_module_1 = require("./student/student.module");
+const socket_module_1 = require("./socket/socket.module");
 let ApisModule = class ApisModule {
 };
 ApisModule = __decorate([
     (0, common_1.Module)({
-        imports: [school_module_1.SchoolModule, teacher_module_1.TeacherModule, student_module_1.StudentModule],
-        exports: [school_module_1.SchoolModule, teacher_module_1.TeacherModule, student_module_1.StudentModule],
+        imports: [school_module_1.SchoolModule, teacher_module_1.TeacherModule, student_module_1.StudentModule, socket_module_1.GatewayModule],
+        exports: [school_module_1.SchoolModule, teacher_module_1.TeacherModule, student_module_1.StudentModule, socket_module_1.GatewayModule],
     })
 ], ApisModule);
 exports.ApisModule = ApisModule;

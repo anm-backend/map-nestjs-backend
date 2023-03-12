@@ -51,4 +51,8 @@ export declare class TeacherService extends BaseService<Teacher, CreateTeacherDt
         success: boolean;
         data: Teacher;
     }>;
+    deleteById(id: string): Promise<{
+        success: boolean;
+        data: Teacher;
+    }>;
 }
