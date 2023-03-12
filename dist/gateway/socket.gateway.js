@@ -30,6 +30,7 @@ __decorate([
 SocketGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         namespace: '/alert',
+        cors: true,
     })
 ], SocketGateway);
 exports.SocketGateway = SocketGateway;

@@ -22,9 +22,6 @@ let ChatGateway = class ChatGateway {
     handleDisconnect(client) {
         const sockets = this.io.sockets;
     }
-    handleMessageVoid(client, message) {
-        this.wss.to(message.room).emit('msgToClient', message);
-    }
     handleJoinRoom(client, room) {
         client.join(room);
         client.emit('joinerRoom', room);
@@ -42,12 +39,6 @@ __decorate([
     (0, websockets_1.WebSocketServer)(),
     __metadata("design:type", socket_io_1.Namespace)
 ], ChatGateway.prototype, "io", void 0);
-__decorate([
-    (0, websockets_1.SubscribeMessage)('msgToServer'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
-    __metadata("design:returntype", void 0)
-], ChatGateway.prototype, "handleMessageVoid", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('joinRoom'),
     __metadata("design:type", Function),

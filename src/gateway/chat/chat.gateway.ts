@@ -42,15 +42,15 @@ export class ChatGateway
     // );
   }
 
-  @SubscribeMessage('msgToServer')
-  handleMessageVoid(
-    client: Socket,
-    // message: { sender: string, message: string },
-    message: { sender: string; room: string; message: string },
-  ): void {
-    // this.wss.emit('msgToClient', message);
-    this.wss.to(message.room).emit('msgToClient', message);
-  }
+  // @SubscribeMessage('msgToServer')
+  // handleMessageVoid(
+  //   client: Socket,
+  //   // message: { sender: string, message: string },
+  //   message: { sender: string; room: string; message: string },
+  // ): void {
+  //   // this.wss.emit('msgToClient', message);
+  //   this.wss.to(message.room).emit('msgToClient', message);
+  // }
 
   @SubscribeMessage('joinRoom')
   handleJoinRoom(client: Socket, room: string): void {

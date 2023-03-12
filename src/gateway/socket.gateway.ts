@@ -8,6 +8,7 @@ import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   namespace: '/alert',
+  cors: true,
 })
 export class SocketGateway {
   @WebSocketServer() wss: Server;

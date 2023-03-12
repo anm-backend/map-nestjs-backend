@@ -14,13 +14,22 @@ import { UpdateRealtimeDto } from './dto/update-realtime.dto';
 import { Socket, Server } from 'socket.io';
 import { OnGatewayDisconnect } from '@nestjs/websockets/interfaces/hooks';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  // serveClient: false,
+  // pingInterval: 10000,
+  // pingTimeout: 5000,
+  // cookie: false,
+  // cors: {
+  //   origin: '*'
+  // }
+  cors: true,
+})
 // Change Socket Gateway
 // @WebSocketGateway(4001, {
-  //   path: '/websocket',
-  // cors: true,
-  //   serveClient: true,
-  //   namespace: '/',
+//   path: '/websocket',
+// cors: true,
+//   serveClient: true,
+//   namespace: '/',
 // })
 export class RealtimeGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
